@@ -32,9 +32,9 @@ jobs:
 
       - name: Build an example site
         run: |
+          mkdir -p docs/ja
           printf '# Example\n\nSee [Usage](usage.md) and [LICENSE](../LICENSE).\n\n## Installation\n\nText.\n' > docs/README.md
           printf '# Usage\n\n## Options\n\nText.\n' > docs/usage.md
-          mkdir -p docs/ja
           printf '# 例\n\n[使い方](usage.md)と [LICENSE](../../LICENSE) を参照してください。\n\n<a id="installation"></a>\n\n## インストール\n\n本文。\n' > docs/ja/README.md
           cp config.repo.js config.js
           npm run docs:build

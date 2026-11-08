@@ -20,7 +20,7 @@ on:
         type: string
         default: main
       title:
-        description: Site title (default: the first heading of docs/README.md)
+        description: 'Site title (default: the first heading of docs/README.md)'
         type: string
         default: ''
 
