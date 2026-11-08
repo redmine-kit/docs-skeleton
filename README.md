@@ -18,7 +18,6 @@ on:
     branches: [main]
     paths:
       - 'docs/**'
-      - '.github/workflows/docs.yml'
   workflow_dispatch:
 
 permissions:
@@ -38,7 +37,7 @@ jobs:
 
 and set **Settings » Pages » Source** to **GitHub Actions**. The repository `redmine-kit.github.io` is the organization's top site and is published at `https://redmine-kit.github.io/`; link from it to the other sites with `<a href="/<repo>/" target="_self">`, so that the browser loads them instead of this site's router. The reusable workflow `.github/workflows/repo-docs.yml` builds the site with `config.repo.js` and deploys it. It deploys only from the default branch of a repository in the organization.
 
-- **Rebuilding:** the site is rebuilt when `docs/` or the workflow changes. After changing something else that the site shows (the repository description, `LICENSE`), or after a change to this skeleton, run the workflow by hand from the Actions tab (**Run workflow**).
+- **Rebuilding:** the site is rebuilt only when `docs/` changes. After changing something else that the site shows (the workflow, the repository description, `LICENSE`), or after a change to this skeleton, run the workflow by hand from the Actions tab (**Run workflow**).
 - **Inputs:** `title` sets the site title, and `skeleton-ref` the branch, tag or SHA of this skeleton to build with (default: `main`). To pin the skeleton, pass the same ref to both:
 
   ```yaml
