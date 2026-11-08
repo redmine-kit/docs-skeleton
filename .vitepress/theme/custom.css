@@ -39,3 +39,20 @@
   justify-content: center;
   padding: 48px 24px;
 }
+
+/*
+ * Dropdowns of the header, such as the language switcher. iPadOS Safari
+ * painted the page content over an open dropdown once its fade-in ended
+ * (the items stayed tappable): at the end of the transition WebKit drops the
+ * menu's compositing layer, and a tall menu is also a scroll container with
+ * a layer of its own. Keep the menu on its own layer for good, and keep it
+ * within the viewport below the header so that it rarely needs to scroll.
+ */
+.VPNavBar .VPFlyout .menu {
+  will-change: opacity, transform;
+}
+
+.VPNavBar .VPFlyout .VPMenu {
+  max-height: calc(100vh - var(--vp-nav-height) - 16px);
+  max-height: calc(100dvh - var(--vp-nav-height) - 16px);
+}
