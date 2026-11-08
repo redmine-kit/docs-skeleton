@@ -41,7 +41,7 @@ export const groups = [
     items: [
       {
         repo: 'serverless',
-        name: 'redmine-kit/serverless',
+        name: 'Serverless',
         status: 'design',
         en: 'A design for running the latest Redmine on AWS Lambda, with Aurora DSQL, S3, SQS and SES, using Redmine Serverless.',
         ja: '最新の Redmine を、Aurora DSQL、S3、SQS、SES と Redmine Serverless を使って、AWS Lambda で動かす設計です。',
