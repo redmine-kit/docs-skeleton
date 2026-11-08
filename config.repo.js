@@ -30,6 +30,8 @@ import { dirname, join, posix, relative } from 'path'
 import { fileURLToPath } from 'url'
 import { createMarkdownRenderer, disposeMdItInstance } from 'vitepress'
 import { sourceLinks } from './.vitepress/plugins/source-links.js'
+import { siteNav } from './.vitepress/site-nav.js'
+import { sitesMarkdown } from './.vitepress/sites.js'
 
 const root = dirname(fileURLToPath(import.meta.url))
 const srcDir = join(root, 'docs')
@@ -273,8 +275,19 @@ export default async () => {
   const siteUrl = `https://${owner.toLowerCase()}.github.io${base}`
   const licenseLink = license && `<a href="${repoUrl}/blob/${branch}/${license}">${license}</a>`
 
+  // The header menu of every site; its entry for this site is highlighted.
+  const current = topSite ? 'home' : repo
+  // On the top page, <SiteList group="..." /> becomes a Markdown list in the
+  // Markdown version of the page, and llms.txt lists every site.
+  const markdownOutput = topSite ? {
+    transform: (content, { locale }) => content.replace(/<SiteList\s+group="([^"]+)"[^>]*\/>/g,
+      (_, group) => sitesMarkdown(locale === 'ja' ? 'ja' : 'en', group)),
+    llmsTxt: (locale) => `## ${locale === 'ja' ? 'サイト' : 'Sites'}\n\n` + sitesMarkdown(locale === 'ja' ? 'ja' : 'en'),
+  } : undefined
+
   return {
     base,
+    ...(markdownOutput ? { markdownOutput } : {}),
     title,
     description,
     rewrites: toRoute,
@@ -291,6 +304,26 @@ export default async () => {
       },
     },
     themeConfig: {
+      nav: siteNav({ current }),
+      ...(ja ? {
+        search: {
+          provider: 'local',
+          options: {
+            locales: {
+              ja: {
+                translations: {
+                  button: { buttonText: '検索', buttonAriaLabel: '検索' },
+                  modal: {
+                    noResultsText: '見つかりませんでした',
+                    resetButtonTitle: 'クリア',
+                    footer: { selectText: '選択', navigateText: '移動', closeText: '閉じる' },
+                  },
+                },
+              },
+            },
+          },
+        },
+      } : {}),
       sidebar,
       // Heading anchor => page, for links to a section on another page
       headingAnchors: anchors,
@@ -317,6 +350,7 @@ export default async () => {
           lang: 'ja',
           title: readTitle('ja/README.md') || title,
           themeConfig: {
+            nav: siteNav({ locale: 'ja', current }),
             sidebar: ja.sidebar,
             headingAnchors: ja.anchors,
             editLink: {

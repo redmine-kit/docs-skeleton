@@ -4,23 +4,143 @@
   max-width: 100% !important;
 }
 
-/* Theme Variables */
+/*
+ * Colors of Redmine 7 (application.css and open-color.css of Redmine 7.0.3):
+ * links in --oc-blue-9 (#1864ab) with a red hover (--oc-red-9, #c92a2a), the
+ * header in #3A78A3 and the top menu in #234761.
+ */
 :root {
-  --site-color-progress: #2f6596;
-  --vp-c-brand-1: #2f6596;
-  --vp-c-brand-2: #285a87;
-  --vp-c-brand-3: #1f4a70;
-  --vp-c-brand-soft: rgba(47, 101, 150, 0.14);
+  --rk-redmine-header: #3a78a3;
+  --rk-redmine-top-menu: #234761;
+  --rk-link-hover: #c92a2a;
+  --site-color-progress: #3a78a3;
+  --vp-c-brand-1: #1864ab;
+  --vp-c-brand-2: #2f6690;
+  --vp-c-brand-3: #3a78a3;
+  --vp-c-brand-soft: rgba(58, 120, 163, 0.14);
+  --vp-home-hero-name-color: #3a78a3;
   --vp-custom-block-font-size: 14px;
 }
 
-/* Dark Theme */
 .dark {
-  --site-color-progress: #7fb2e0;
-  --vp-c-brand-1: #7fb2e0;
-  --vp-c-brand-2: #5d97cc;
-  --vp-c-brand-3: #4a84ba;
-  --vp-c-brand-soft: rgba(127, 178, 224, 0.16);
+  --rk-link-hover: #ff8787;
+  --site-color-progress: #74c0fc;
+  --vp-c-brand-1: #74c0fc;
+  --vp-c-brand-2: #4dabf7;
+  --vp-c-brand-3: #3a78a3;
+  --vp-c-brand-soft: rgba(116, 192, 252, 0.16);
+  --vp-home-hero-name-color: #74c0fc;
+}
+
+.vp-doc a:hover {
+  color: var(--rk-link-hover);
+}
+
+/*
+ * Header bar in the colors of Redmine's header, with white text. Menus that
+ * open from it keep the normal colors.
+ */
+.VPNavBar {
+  --vp-c-text-1: #fff;
+  --vp-c-text-2: rgba(255, 255, 255, 0.88);
+  --vp-c-text-3: rgba(255, 255, 255, 0.7);
+  --vp-c-brand-1: #fff;
+  --vp-c-brand-2: #fff;
+}
+
+.VPNavBar .VPMenu,
+.VPNavBar .VPFlyout .menu {
+  --vp-c-text-1: #3c3c43;
+  --vp-c-text-2: #67676c;
+  --vp-c-text-3: #929295;
+  --vp-c-brand-1: #1864ab;
+  --vp-c-brand-2: #2f6690;
+}
+
+.dark .VPNavBar .VPMenu,
+.dark .VPNavBar .VPFlyout .menu {
+  --vp-c-text-1: #dfdfd6;
+  --vp-c-text-2: #98989f;
+  --vp-c-text-3: #6a6a71;
+  --vp-c-brand-1: #74c0fc;
+  --vp-c-brand-2: #4dabf7;
+}
+
+/* VitePress paints parts of the bar differently on the home page, on pages
+   with a sidebar and when scrolled; one color for all of them. */
+:root {
+  --vp-nav-bg-color: var(--rk-redmine-header);
+}
+
+.dark {
+  --vp-nav-bg-color: var(--rk-redmine-top-menu);
+}
+
+.VPNavBar,
+.VPNavBar .wrapper,
+.VPNavBar .container,
+.VPNavBar .content,
+.VPNavBar .content-body,
+.VPNavBar .title {
+  background-color: var(--vp-nav-bg-color) !important;
+}
+
+.VPNavBar .divider-line,
+.VPNavBar.has-sidebar .divider-line {
+  background-color: transparent;
+}
+
+.VPNavBar .content-body .VPNavBarTitle .title,
+.VPNavBar .VPNavBarMenuLink,
+.VPNavBar .VPNavBarMenuGroup .button,
+.VPNavBar .VPNavBarTranslations .button,
+.VPNavBar .VPNavBarExtra .button,
+.VPNavBar .VPSocialLink,
+.VPNavBar .VPNavBarHamburger,
+.VPNavBar .DocSearch-Button,
+.VPNavBar .VPNavBarSearchButton {
+  color: #fff;
+}
+
+.VPNavBar .VPNavBarMenuLink:hover,
+.VPNavBar .VPNavBarMenuLink.active,
+.VPNavBar .VPNavBarMenuGroup.active .button,
+.VPNavBar .VPNavBarMenuGroup .button:hover,
+.VPNavBar .VPSocialLink:hover {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+.VPNavBar .VPNavBarHamburger .top,
+.VPNavBar .VPNavBarHamburger .middle,
+.VPNavBar .VPNavBarHamburger .bottom {
+  background-color: #fff;
+}
+
+.VPNavBar .content-body .divider,
+.VPNavBar .VPNavBarExtra .divider,
+.VPNavBar .divider::before {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.VPNavBar .VPSwitchAppearance {
+  border-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.VPNavBar .VPNavBarSearchButton,
+.VPNavBar .DocSearch-Button {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.VPNavBar .VPNavBarSearchButton .text,
+.VPNavBar .VPNavBarSearchButton .vpi-search,
+.VPNavBar .VPNavBarSearchButton kbd,
+.VPNavBar .DocSearch-Button-Placeholder,
+.VPNavBar .DocSearch-Search-Icon {
+  color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 /*
@@ -55,4 +175,53 @@
 .VPNavBar .VPFlyout .VPMenu {
   max-height: calc(100vh - var(--vp-nav-height) - 16px);
   max-height: calc(100dvh - var(--vp-nav-height) - 16px);
+}
+
+/* Top page (layout: home) of redmine-kit.github.io */
+.VPHome .vp-doc h2 {
+  margin-top: 56px;
+}
+
+/* Hero actions: rounded rectangles instead of the pill shape of VitePress */
+.VPHero .actions .VPButton {
+  border-radius: 8px;
+}
+
+/* Features: text-only cards between the hero and the lists */
+.rk-features {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 959px) {
+  .rk-features {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.rk-feature {
+  padding: 16px 18px;
+  border-radius: 12px;
+  background-color: color-mix(in srgb, var(--vp-c-bg-soft) 50%, var(--vp-c-bg));
+}
+
+.vp-doc .rk-feature p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--vp-c-text-2);
+}
+
+.vp-doc .rk-feature p.rk-feature-title {
+  margin-bottom: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+}
+
+.VPNavBar .title,
+.VPNavBar .divider-line {
+  border-bottom-color: transparent !important;
 }
