@@ -69,9 +69,12 @@ Every page is also published as Markdown next to its `.html` (`/<repo>/installat
 npm ci
 rsync -a --delete ../redmine_lookbook/docs/ docs/
 cp config.repo.js config.js
-DOCS_REPOSITORY=redmine-theme/redmine_lookbook DOCS_SOURCE=../redmine_lookbook npm run docs:build
+export DOCS_REPOSITORY=redmine-theme/redmine_lookbook DOCS_SOURCE=../redmine_lookbook
+npm run docs:build
 npm run docs:preview
 ```
+
+`docs:preview` reads the configuration too, so it needs the same variables.
 
 `.npmrc` sets `ignore-scripts=true`, so the install scripts of dependencies do not run.
 
