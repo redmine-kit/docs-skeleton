@@ -1,0 +1,41 @@
+/** Improve content container real-estate **/
+/** see: https://github.com/vuejs/vitepress/discussions/1646 **/
+.VPDoc.has-aside .content-container {
+  max-width: 100% !important;
+}
+
+/* Theme Variables */
+:root {
+  --site-color-progress: #2f6596;
+  --vp-c-brand-1: #2f6596;
+  --vp-c-brand-2: #285a87;
+  --vp-c-brand-3: #1f4a70;
+  --vp-c-brand-soft: rgba(47, 101, 150, 0.14);
+  --vp-custom-block-font-size: 14px;
+}
+
+/* Dark Theme */
+.dark {
+  --site-color-progress: #7fb2e0;
+  --vp-c-brand-1: #7fb2e0;
+  --vp-c-brand-2: #5d97cc;
+  --vp-c-brand-3: #4a84ba;
+  --vp-c-brand-soft: rgba(127, 178, 224, 0.16);
+}
+
+/*
+ * 404 page: center the message between the header (with the version banner,
+ * if any) and the footer. .VPContent already grows to fill that space.
+ */
+.VPContent:has(> .NotFound) {
+  display: flex;
+  flex-direction: column;
+}
+
+.VPContent:has(> .NotFound) > .NotFound {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px 24px;
+}

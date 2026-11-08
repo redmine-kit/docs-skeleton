@@ -1,0 +1,11 @@
+.vitepress/dist
+.vitepress/cache
+.vitepress/.temp
+/node_modules/
+/config.js
+/docs/*
+!/docs/public
+
+.idea
+.vscode
+.DS_Store

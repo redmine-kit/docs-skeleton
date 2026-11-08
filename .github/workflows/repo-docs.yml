@@ -1,0 +1,88 @@
+# Builds the documentation site of a repository from its docs/ folder and
+# deploys it to the repository's GitHub Pages
+# (https://redmine-theme.github.io/<repo>/).
+#
+# Called from .github/workflows/docs.yml of each repository:
+#
+#   jobs:
+#     docs:
+#       if: github.repository_owner == 'redmine-theme'
+#       uses: redmine-theme/docs-skeleton/.github/workflows/repo-docs.yml@main
+#
+# The caller grants `contents: read`, `pages: write` and `id-token: write`.
+name: Repository docs
+
+on:
+  workflow_call:
+    inputs:
+      skeleton-ref:
+        description: Branch, tag or SHA of redmine-theme/docs-skeleton to build with
+        type: string
+        default: main
+      title:
+        description: Site title (default: the first heading of docs/README.md)
+        type: string
+        default: ''
+
+jobs:
+  build:
+    # Never deploy from forks or from branches other than the default branch
+    if: github.repository_owner == 'redmine-theme' && github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          path: source
+          persist-credentials: false
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: redmine-theme/docs-skeleton
+          ref: ${{ inputs.skeleton-ref }}
+          path: skeleton
+          persist-credentials: false
+
+      - name: Merge docs into skeleton
+        run: |
+          rsync -a source/docs/ skeleton/docs/
+          cp skeleton/config.repo.js skeleton/config.js
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: skeleton/package-lock.json
+
+      # skeleton/.npmrc sets ignore-scripts=true
+      - run: npm ci
+        working-directory: skeleton
+
+      - run: npm run docs:build
+        working-directory: skeleton
+        env:
+          DOCS_REPOSITORY: ${{ github.repository }}
+          DOCS_BRANCH: ${{ github.ref_name }}
+          DOCS_SOURCE: ${{ github.workspace }}/source
+          DOCS_TITLE: ${{ inputs.title }}
+          DOCS_DESCRIPTION: ${{ github.event.repository.description }}
+
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: skeleton/.vitepress/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

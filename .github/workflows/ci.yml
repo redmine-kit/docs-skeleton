@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+
+      # .npmrc sets ignore-scripts=true
+      - run: npm ci
+
+      - run: npm run lint
+
+      - name: Build an example site
+        run: |
+          printf '# Example\n\nSee [Usage](usage.md) and [LICENSE](../LICENSE).\n\n## Installation\n\nText.\n' > docs/README.md
+          printf '# Usage\n\n## Options\n\nText.\n' > docs/usage.md
+          mkdir -p docs/ja
+          printf '# 例\n\n[使い方](usage.md)と [LICENSE](../../LICENSE) を参照してください。\n\n<a id="installation"></a>\n\n## インストール\n\n本文。\n' > docs/ja/README.md
+          cp config.repo.js config.js
+          npm run docs:build
+          test -f .vitepress/dist/index.html
+          test -f .vitepress/dist/ja/index.html
+          test -f .vitepress/dist/llms.txt
+          test -f .vitepress/dist/usage.md
+        env:
+          DOCS_REPOSITORY: redmine-theme/example
+          DOCS_BRANCH: main
+          DOCS_SOURCE: ${{ github.workspace }}
