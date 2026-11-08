@@ -2,6 +2,7 @@ import DefaultTheme from 'vitepress/theme-without-fonts'
 import PageLoader from "./components/PageLoader.vue";
 import MarkdownLinks from "./components/MarkdownLinks.vue";
 import MovedAnchor from "./components/MovedAnchor.vue";
+import SiteList from "./components/SiteList.vue";
 import './custom.css'
 import { h } from "vue";
 
@@ -26,7 +27,10 @@ export default {
       'layout-bottom': () => h(MovedAnchor),
     })
   },
-  enhanceApp({ router }) {
+  enhanceApp({ app, router }) {
+    // Cards of the organization's repositories, for the top page
+    app.component('SiteList', SiteList)
+
     if (typeof window === 'undefined') {
       return
     }
