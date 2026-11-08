@@ -238,7 +238,7 @@ export function writeMarkdownOutput(siteConfig, options = {}) {
       return siteUrl + encodeURI(markdownPath(pages.get(source))) + suffix
     }
 
-    if (existsSync(join(srcDir, 'public', target))) {
+    if (!target.startsWith('../') && existsSync(join(srcDir, 'public', target))) {
       return siteUrl + encodeURI(target) + suffix
     }
 

@@ -1,6 +1,5 @@
 import DefaultTheme from 'vitepress/theme-without-fonts'
 import PageLoader from "./components/PageLoader.vue";
-import VersionBanner from "./components/VersionBanner.vue";
 import MarkdownLinks from "./components/MarkdownLinks.vue";
 import MovedAnchor from "./components/MovedAnchor.vue";
 import './custom.css'
@@ -18,11 +17,6 @@ export default {
       'layout-top': () => [
         h(PageLoader),
       ],
-      // The version banner is a strip at the top of the content area that
-      // scrolls with the page instead of being fixed above the header.
-      'doc-top': () => h(VersionBanner, { placement: 'doc' }),
-      'page-top': () => h(VersionBanner, { placement: 'page' }),
-      'home-hero-before': () => h(VersionBanner, { placement: 'home' }),
       // Links to the Markdown of the page (its .md version and its source),
       // on the row of the "Edit this page" link. `doc-after` covers a page
       // without a doc footer.

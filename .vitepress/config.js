@@ -1,6 +1,6 @@
 import { defineConfig } from 'vitepress'
 import { substitutionsReplacer } from './plugins/substitutions-replacer.js'
-import { deepMerge, loadConfigOverrides, applyBaseToHeadTags } from './utils.js'
+import { deepMerge, loadConfigOverrides } from './utils.js'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import { isExcluded, markdownPath, writeMarkdownOutput } from './markdown-output.js'
@@ -9,7 +9,9 @@ const defaultConfig = {
   srcDir: 'docs',
   title: 'Redmine Theme',
   description: 'Documentation of a redmine-theme repository',
-  ignoreDeadLinks: true,
+  // Links between pages are checked at build time; links to files of the
+  // repository point to GitHub (see plugins/source-links.js).
+  ignoreDeadLinks: false,
   substitutions: {},
   themeConfig: {
     outline: {
@@ -18,14 +20,6 @@ const defaultConfig = {
     search: {
       provider: 'local',
     },
-    lastUpdated: {
-      text: 'Updated at',
-      formatOptions: {
-        dateStyle: 'full',
-        timeStyle: 'medium'
-      }
-    },
-    versionBanner: false
   },
   build: {
     rollupOptions: {
@@ -86,9 +80,5 @@ if (markdownOutput !== false) {
   }
 }
 
-// Apply base path to head tags if base is specified
-if (overrides.base) {
-  applyBaseToHeadTags(mergedConfig, overrides.base)
-}
 
 export default defineConfig(mergedConfig)

@@ -36,7 +36,7 @@ const srcDir = join(root, 'docs')
 
 /**
  * Heading anchors as GitHub creates them, so links such as
- * `[Upgrading](#upgrading-from-22x)` work both on GitHub and on the site.
+ * `[Writing previews](#writing-previews)` work both on GitHub and on the site.
  */
 const githubSlugify = (text) => text
   .trim()
@@ -87,7 +87,7 @@ function pageLink(route) {
 
 /**
  * Pages that a page links, in the order of the links, e.g. `['setup.md',
- * 'cache.md']` for `[Setup](setup.md) ... [Cache](cache.md#engine)`.
+ * 'usage.md']` for `[Setup](setup.md) ... [Usage](usage.md#options)`.
  */
 function linkedPages(tokens, page, pages) {
   const linked = []
@@ -128,8 +128,9 @@ function linkedPages(tokens, page, pages) {
  *
  * `anchors` maps every heading anchor to the first page (in the order of the
  * sidebar) that has it, so that the theme can forward links to a section that
- * moved to another page, e.g. `/#dynamodb-cache` to `/cache.html#dynamodb-cache`
- * (see MovedAnchor.vue).
+ * moved to another page, e.g. `/#configuration` to `/configuration.html#configuration`
+ * (see MovedAnchor.vue). Anchors of `<a id="..."></a>` tags count too, so
+ * that the English anchors of translated headings are forwarded.
  */
 async function buildSidebar(pages, prefix = '') {
   const md = await createMarkdownRenderer(srcDir, {
@@ -181,9 +182,13 @@ async function buildSidebar(pages, prefix = '') {
       })
 
       for (const token of tokens) {
-        const id = token.type === 'heading_open' ? token.attrGet('id') : null
-        if (id && !(id in anchors)) {
-          anchors[id] = link
+        const ids = token.type === 'heading_open'
+          ? [token.attrGet('id')]
+          : [...anchorTags(token)]
+        for (const id of ids) {
+          if (id && !(id in anchors)) {
+            anchors[id] = link
+          }
         }
       }
     }
@@ -196,9 +201,41 @@ async function buildSidebar(pages, prefix = '') {
   }
 }
 
-function readTitle() {
-  const home = join(srcDir, 'README.md')
-  const heading = existsSync(home) && readFileSync(home, 'utf-8').match(/^# (.+)$/m)
+/**
+ * The `id` of `<a id="..."></a>` tags in an HTML token (a block or inline
+ * HTML token, or the inline children of a paragraph).
+ */
+function* anchorTags(token) {
+  const html = token.type === 'html_block' || token.type === 'html_inline' ? token.content : ''
+  for (const match of html.matchAll(/<a\s+id="([^"]+)"/g)) {
+    yield match[1]
+  }
+  for (const child of token.children || []) {
+    yield* anchorTags(child)
+  }
+}
+
+/**
+ * The title of a home page: `title` in its front matter, or its first `#`
+ * heading outside code blocks.
+ */
+function readTitle(file) {
+  const path = join(srcDir, file)
+  if (!existsSync(path)) {
+    return undefined
+  }
+
+  const source = readFileSync(path, 'utf-8')
+  const frontMatter = source.match(/^---\n([\s\S]*?)\n---\n/)
+  const title = frontMatter && frontMatter[1].match(/^title:\s*["']?(.+?)["']?\s*$/m)
+  if (title) {
+    return title[1]
+  }
+
+  const heading = source
+    .replace(/^---\n[\s\S]*?\n---\n/, '')
+    .replace(/^(```|~~~)[\s\S]*?^\1/gm, '')
+    .match(/^# (.+)$/m)
 
   return heading ? heading[1].trim() : undefined
 }
@@ -227,7 +264,7 @@ export default async () => {
   const { sidebar, anchors } = await buildSidebar(enPages)
   const ja = jaPages.some((page) => toRoute(page) === 'ja/index.md') ? await buildSidebar(jaPages, 'ja/') : null
 
-  const title = process.env.DOCS_TITLE || readTitle() || repo
+  const title = process.env.DOCS_TITLE || readTitle('README.md') || repo
   const description = process.env.DOCS_DESCRIPTION || `Documentation of ${repository}`
   const repoUrl = `https://github.com/${repository}`
   const siteUrl = `https://${owner.toLowerCase()}.github.io/${repo}/`
@@ -275,6 +312,7 @@ export default async () => {
         ja: {
           label: '日本語',
           lang: 'ja',
+          title: readTitle('ja/README.md') || title,
           themeConfig: {
             sidebar: ja.sidebar,
             headingAnchors: ja.anchors,
@@ -284,7 +322,6 @@ export default async () => {
             },
             docFooter: { prev: '前のページ', next: '次のページ' },
             outline: { label: 'このページの内容' },
-            lastUpdated: { text: '最終更新' },
             returnToTopLabel: 'ページの先頭へ',
             sidebarMenuLabel: 'メニュー',
             darkModeSwitchLabel: 'ダークモード',

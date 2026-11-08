@@ -1,7 +1,8 @@
 /**
 * Markdown-it plugin for replacing text placeholders
 *
-* Replaces custom placeholders like |phpversion| with configured values.
+* Replaces placeholders such as |version| with the values in the `substitutions`
+* option of config.js.
 * Supports optional formatting (bold, italic, code, or none).
 */
 
@@ -29,24 +30,10 @@ export function formatValue(value, format = 'none') {
 * @param {Object} md - markdown-it instance
 * @param {Object} options - plugin options
 * @param {Object} options.substitutions - Object with placeholder keys and values
-* @param {string} options.phpversion - Legacy: Current PHP version (deprecated, use substitutions)
-* @param {string} options.minphpversion - Legacy: Minimum PHP version (deprecated, use substitutions)
 * @returns {void}
 */
 export function substitutionsReplacer(md, options = {}) {
-  let substitutions = {}
-
-  // Support new substitutions format
-  if (options.substitutions) {
-    substitutions = options.substitutions
-  }
-  // Backward compatibility: convert old phpVersions format
-  else if (options.phpversion || options.minphpversion) {
-    substitutions = {
-      '|phpversion|': { value: options.phpversion || '8.4', format: 'bold' },
-      '|minphpversion|': { value: options.minphpversion || '8.1', format: 'italic' }
-    }
-  }
+  const substitutions = options.substitutions || {}
 
   // Store original render method
   const originalRender = md.render.bind(md)

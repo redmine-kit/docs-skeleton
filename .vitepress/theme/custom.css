@@ -24,8 +24,8 @@
 }
 
 /*
- * 404 page: center the message between the header (with the version banner,
- * if any) and the footer. .VPContent already grows to fill that space.
+ * 404 page: center the message between the header and the footer.
+ * .VPContent already grows to fill that space.
  */
 .VPContent:has(> .NotFound) {
   display: flex;

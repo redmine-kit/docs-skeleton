@@ -81,11 +81,11 @@ const show = computed(() => (markdownUrl.value || sourceUrl.value) && (!props.st
 <template>
   <div
     v-if="show"
-    :class="standalone ? 'VPDocFooter poc-doc-footer' : 'poc-doc-links'"
+    :class="standalone ? 'VPDocFooter site-doc-footer' : 'site-doc-links'"
   >
     <a
       v-if="markdownUrl"
-      class="poc-doc-link"
+      class="site-doc-link"
       :href="markdownUrl"
       :title="label('markdownTitle')"
       type="text/markdown"
@@ -93,7 +93,7 @@ const show = computed(() => (markdownUrl.value || sourceUrl.value) && (!props.st
     >
       <!-- Markdown mark, drawn in the style of the Lucide icons of VitePress -->
       <svg
-        class="poc-doc-link-icon"
+        class="site-doc-link-icon"
         viewBox="0 0 24 24"
         aria-hidden="true"
       >
@@ -118,7 +118,7 @@ const show = computed(() => (markdownUrl.value || sourceUrl.value) && (!props.st
     </a>
     <a
       v-if="sourceUrl"
-      class="poc-doc-link"
+      class="site-doc-link"
       :href="sourceUrl"
       :title="label('sourceTitle')"
       target="_blank"
@@ -126,7 +126,7 @@ const show = computed(() => (markdownUrl.value || sourceUrl.value) && (!props.st
     >
       <!-- "github" icon of Lucide (ISC), like the edit link icon of VitePress -->
       <svg
-        class="poc-doc-link-icon"
+        class="site-doc-link-icon"
         viewBox="0 0 24 24"
         aria-hidden="true"
       >
@@ -152,7 +152,7 @@ const show = computed(() => (markdownUrl.value || sourceUrl.value) && (!props.st
  * Markdown and Source links, then the last updated date at the right end. The
  * row wraps on narrow screens; the previous/next links stay below it.
  *
- * `.edit-info` (the edit link and the last updated date) and `.poc-doc-links`
+ * `.edit-info` (the edit link and the last updated date) and `.site-doc-links`
  * are flattened with `display: contents` so that all the links wrap as items
  * of one flex row.
  */
@@ -164,7 +164,7 @@ const show = computed(() => (markdownUrl.value || sourceUrl.value) && (!props.st
 }
 
 .VPDoc .VPDocFooter .edit-info,
-.VPDoc .VPDocFooter .poc-doc-links {
+.VPDoc .VPDocFooter .site-doc-links {
   display: contents;
 }
 
@@ -172,7 +172,7 @@ const show = computed(() => (markdownUrl.value || sourceUrl.value) && (!props.st
   order: 1;
 }
 
-.VPDoc .VPDocFooter .poc-doc-link {
+.VPDoc .VPDocFooter .site-doc-link {
   order: 2;
 }
 
@@ -199,12 +199,12 @@ const show = computed(() => (markdownUrl.value || sourceUrl.value) && (!props.st
 }
 
 /* The footer of a page that has no VitePress doc footer */
-.VPDoc .poc-doc-footer {
+.VPDoc .site-doc-footer {
   margin-top: 64px;
 }
 
 /* Same look as the "Edit this page" link (.edit-link-button) */
-.poc-doc-link {
+.site-doc-link {
   display: flex;
   align-items: center;
   border: 0;
@@ -216,11 +216,11 @@ const show = computed(() => (markdownUrl.value || sourceUrl.value) && (!props.st
   transition: color 0.25s;
 }
 
-.poc-doc-link:hover {
+.site-doc-link:hover {
   color: var(--vp-c-brand-2);
 }
 
-.poc-doc-link-icon {
+.site-doc-link-icon {
   flex-shrink: 0;
   width: 1em;
   height: 1em;

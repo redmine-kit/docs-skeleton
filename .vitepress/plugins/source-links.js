@@ -8,7 +8,7 @@ const schemeRE = /^[a-z][a-z0-9+.-]*:/i
  *
  * - `README.md` pages are served as `index.html`, so links to them point to
  *   `index.md` instead.
- * - Links to files that are not pages (e.g. `examples/router.php`) and links
+ * - Links to files that are not pages (e.g. `examples/config.yml`) and links
  *   out of `docs/` (e.g. `../LICENSE`) point to the file on GitHub.
  *
  * Images are not links, so Vite still bundles them from `docs/img/`.
@@ -23,8 +23,11 @@ export function sourceLinks(md, { repository, branch, pages }) {
   const blobUrl = (path) => encodeURI(`https://github.com/${repository}/blob/${branch}/${path}`)
 
   const isPage = (target) => {
-    if (target.endsWith('.md') || target.endsWith('.html')) {
-      return true
+    if (target.endsWith('.md')) {
+      return pages.includes(target)
+    }
+    if (target.endsWith('.html')) {
+      return pages.includes(target.replace(/\.html$/, '.md'))
     }
 
     // A directory link is a page when the directory has README.md or index.md
@@ -43,7 +46,13 @@ export function sourceLinks(md, { repository, branch, pages }) {
       return href
     }
 
-    const target = posix.normalize(posix.join(posix.dirname(page), decodeURI(path)))
+    let decoded
+    try {
+      decoded = decodeURI(path)
+    } catch {
+      return href
+    }
+    const target = posix.normalize(posix.join(posix.dirname(page), decoded))
 
     if (target === '..' || target.startsWith('../') || !isPage(target)) {
       return blobUrl(posix.normalize(`docs/${target}`)) + suffix
