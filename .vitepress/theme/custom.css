@@ -77,12 +77,13 @@
   --vp-nav-bg-color: var(--rk-header);
 }
 
+/* Only the bar's own parts: menus inside it also have .title and .content. */
 .VPNavBar,
-.VPNavBar .wrapper,
-.VPNavBar .container,
-.VPNavBar .content,
-.VPNavBar .content-body,
-.VPNavBar .title {
+.VPNavBar > .wrapper,
+.VPNavBar > .wrapper > .container,
+.VPNavBar > .wrapper > .container > .title,
+.VPNavBar > .wrapper > .container > .content,
+.VPNavBar > .wrapper > .container > .content > .content-body {
   background-color: var(--vp-nav-bg-color) !important;
 }
 
@@ -222,7 +223,7 @@
   color: var(--vp-c-text-1);
 }
 
-.VPNavBar .title,
+.VPNavBar > .wrapper > .container > .title,
 .VPNavBar .divider-line {
   border-bottom-color: transparent !important;
 }
