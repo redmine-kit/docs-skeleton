@@ -1,6 +1,6 @@
-# redmine-theme/docs-skeleton
+# redmine-kit/docs-skeleton
 
-A [VitePress](https://vitepress.dev/) skeleton that publishes the `docs/` folder of a repository in the [redmine-theme](https://github.com/redmine-theme) organization to GitHub Pages, at `https://redmine-theme.github.io/<repo>/`.
+A [VitePress](https://vitepress.dev/) skeleton that publishes the `docs/` folder of a repository in the [redmine-kit](https://github.com/redmine-kit) organization to GitHub Pages, at `https://redmine-kit.github.io/<repo>/`.
 
 It is based on [pieceofcake2/docs-skeleton](https://github.com/pieceofcake2/docs-skeleton), itself a fork of [cakephp/docs-skeleton](https://github.com/cakephp/docs-skeleton). The CakePHP branding, the book's header menu, the package list and analytics are removed.
 
@@ -32,8 +32,8 @@ concurrency:
 
 jobs:
   docs:
-    if: github.repository_owner == 'redmine-theme'
-    uses: redmine-theme/docs-skeleton/.github/workflows/repo-docs.yml@main
+    if: github.repository_owner == 'redmine-kit'
+    uses: redmine-kit/docs-skeleton/.github/workflows/repo-docs.yml@main
 ```
 
 and set **Settings » Pages » Source** to **GitHub Actions**. The reusable workflow `.github/workflows/repo-docs.yml` builds the site with `config.repo.js` and deploys it. It deploys only from the default branch of a repository in the organization.
@@ -44,8 +44,8 @@ and set **Settings » Pages » Source** to **GitHub Actions**. The reusable work
   ```yaml
   jobs:
     docs:
-      if: github.repository_owner == 'redmine-theme'
-      uses: redmine-theme/docs-skeleton/.github/workflows/repo-docs.yml@<sha>
+      if: github.repository_owner == 'redmine-kit'
+      uses: redmine-kit/docs-skeleton/.github/workflows/repo-docs.yml@<sha>
       with:
         skeleton-ref: <sha>
         title: My Theme
@@ -85,7 +85,7 @@ Every page is also published as Markdown next to its `.html` (`/<repo>/installat
 npm ci
 rsync -a --delete ../redmine_lookbook/docs/ docs/
 cp config.repo.js config.js
-export DOCS_REPOSITORY=redmine-theme/redmine_lookbook DOCS_SOURCE=../redmine_lookbook
+export DOCS_REPOSITORY=redmine-kit/redmine_lookbook DOCS_SOURCE=../redmine_lookbook
 npm run docs:build
 npm run docs:preview
 ```

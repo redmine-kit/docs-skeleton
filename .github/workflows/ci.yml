@@ -43,6 +43,6 @@ jobs:
           test -f .vitepress/dist/llms.txt
           test -f .vitepress/dist/usage.md
         env:
-          DOCS_REPOSITORY: redmine-theme/example
+          DOCS_REPOSITORY: redmine-kit/example
           DOCS_BRANCH: main
           DOCS_SOURCE: ${{ github.workspace }}

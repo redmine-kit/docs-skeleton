@@ -5,7 +5,7 @@ import MovedAnchor from "./components/MovedAnchor.vue";
 import './custom.css'
 import { h } from "vue";
 
-// Other sites on the same origin (https://redmine-theme.github.io/<repo>/)
+// Other sites on the same origin (https://redmine-kit.github.io/<repo>/)
 // are outside this site's base. A link into one of them must be a full page
 // load, because the client-side router of this site doesn't know its pages.
 const isOtherSite = (pathname, base) => !pathname.startsWith(base)

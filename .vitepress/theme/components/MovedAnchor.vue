@@ -1,7 +1,7 @@
 <script setup>
 // Forwards a link to a heading anchor that is not on the page to the page
-// that has it, e.g. https://redmine-theme.github.io/redmine_lookbook/#settings to
-// https://redmine-theme.github.io/redmine_lookbook/configuration.html#settings after a section
+// that has it, e.g. https://redmine-kit.github.io/redmine_lookbook/#settings to
+// https://redmine-kit.github.io/redmine_lookbook/configuration.html#settings after a section
 // moved from the home page to a page of its own.
 //
 // `themeConfig.headingAnchors` maps every heading anchor of the site to the

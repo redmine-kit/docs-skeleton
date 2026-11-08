@@ -5,7 +5,7 @@
  * file, and an index is written at the base of each locale:
  *
  * - `<page>.md` next to `<page>.html` (`index.md` for a directory URL), e.g.
- *   https://redmine-theme.github.io/redmine_lookbook/installation.md
+ *   https://redmine-kit.github.io/redmine_lookbook/installation.md
  * - `llms.txt`: the title of the site and a link to the Markdown of every
  *   page, grouped like the sidebar (https://llmstxt.org/)
  * - `llms-full.txt`: the Markdown of every page in one file
@@ -166,7 +166,7 @@ function mapOutsideCode(content, replace) {
  * @param {object} siteConfig VitePress SiteConfig
  * @param {object} [options]
  * @param {string} [options.siteUrl] URL of the site including the base, e.g.
- *   `https://redmine-theme.github.io/<repo>/` (default: `sitemap.hostname`)
+ *   `https://redmine-kit.github.io/<repo>/` (default: `sitemap.hostname`)
  * @param {object} [options.substitutions] Text substitutions of the site
  * @param {(content: string, context: {route: string, locale: string}) => string} [options.transform]
  *   Changes the Markdown of a page before it is written
@@ -177,7 +177,7 @@ function mapOutsideCode(content, replace) {
 export function writeMarkdownOutput(siteConfig, options = {}) {
   const { srcDir, outDir, site } = siteConfig
   const base = site.base || '/'
-  const hostname = options.siteUrl ?? siteConfig.sitemap?.hostname ?? `https://redmine-theme.github.io${base}`
+  const hostname = options.siteUrl ?? siteConfig.sitemap?.hostname ?? `https://redmine-kit.github.io${base}`
   const siteUrl = hostname.endsWith('/') ? hostname : `${hostname}/`
   const blobPrefix = sourceUrlPrefix(site.themeConfig, 'blob')
   const rawPrefix = sourceUrlPrefix(site.themeConfig, 'raw')

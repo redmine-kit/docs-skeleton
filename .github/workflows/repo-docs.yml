@@ -1,13 +1,13 @@
 # Builds the documentation site of a repository from its docs/ folder and
 # deploys it to the repository's GitHub Pages
-# (https://redmine-theme.github.io/<repo>/).
+# (https://redmine-kit.github.io/<repo>/).
 #
 # Called from .github/workflows/docs.yml of each repository:
 #
 #   jobs:
 #     docs:
-#       if: github.repository_owner == 'redmine-theme'
-#       uses: redmine-theme/docs-skeleton/.github/workflows/repo-docs.yml@main
+#       if: github.repository_owner == 'redmine-kit'
+#       uses: redmine-kit/docs-skeleton/.github/workflows/repo-docs.yml@main
 #
 # The caller grants `contents: read`, `pages: write` and `id-token: write`.
 name: Repository docs
@@ -16,7 +16,7 @@ on:
   workflow_call:
     inputs:
       skeleton-ref:
-        description: Branch, tag or SHA of redmine-theme/docs-skeleton to build with
+        description: Branch, tag or SHA of redmine-kit/docs-skeleton to build with
         type: string
         default: main
       title:
@@ -27,7 +27,7 @@ on:
 jobs:
   build:
     # Never deploy from forks or from branches other than the default branch
-    if: github.repository_owner == 'redmine-theme' && github.ref_name == github.event.repository.default_branch
+    if: github.repository_owner == 'redmine-kit' && github.ref_name == github.event.repository.default_branch
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -39,7 +39,7 @@ jobs:
 
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          repository: redmine-theme/docs-skeleton
+          repository: redmine-kit/docs-skeleton
           ref: ${{ inputs.skeleton-ref }}
           path: skeleton
           persist-credentials: false

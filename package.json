@@ -1,5 +1,5 @@
 {
-    "name": "redmine-theme-docs-skeleton",
+    "name": "redmine-kit-docs-skeleton",
     "private": true,
     "license": "MIT",
     "devDependencies": {

@@ -8,7 +8,7 @@ import { isExcluded, markdownPath, writeMarkdownOutput } from './markdown-output
 const defaultConfig = {
   srcDir: 'docs',
   title: 'Redmine Theme',
-  description: 'Documentation of a redmine-theme repository',
+  description: 'Documentation of a redmine-kit repository',
   // Links between pages are checked at build time; links to files of the
   // repository point to GitHub (see plugins/source-links.js).
   ignoreDeadLinks: false,

@@ -1,13 +1,13 @@
 /**
  * Configuration overrides for the documentation site of a repository in the
- * redmine-theme organization, built from the `docs/` folder of the repository
- * and published at https://redmine-theme.github.io/<repo>/.
+ * redmine-kit organization, built from the `docs/` folder of the repository
+ * and published at https://redmine-kit.github.io/<repo>/.
  *
  * Used by .github/workflows/repo-docs.yml, which copies this file to
  * `config.js`. Everything is derived from the repository, so repositories
  * need no configuration of their own:
  *
- * - DOCS_REPOSITORY (required): owner/repo, e.g. redmine-theme/redmine_lookbook
+ * - DOCS_REPOSITORY (required): owner/repo, e.g. redmine-kit/redmine_lookbook
  * - DOCS_BRANCH: branch the docs are built from (default: main)
  * - DOCS_SOURCE: path of the repository's checkout; its LICENSE file is
  *   linked from the footer
