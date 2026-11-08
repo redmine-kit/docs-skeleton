@@ -267,11 +267,14 @@ export default async () => {
   const title = process.env.DOCS_TITLE || readTitle('README.md') || repo
   const description = process.env.DOCS_DESCRIPTION || `Documentation of ${repository}`
   const repoUrl = `https://github.com/${repository}`
-  const siteUrl = `https://${owner.toLowerCase()}.github.io/${repo}/`
+  // The repository <owner>.github.io is the organization's top site, at /.
+  const topSite = repo.toLowerCase() === `${owner.toLowerCase()}.github.io`
+  const base = topSite ? '/' : `/${repo}/`
+  const siteUrl = `https://${owner.toLowerCase()}.github.io${base}`
   const licenseLink = license && `<a href="${repoUrl}/blob/${branch}/${license}">${license}</a>`
 
   return {
-    base: `/${repo}/`,
+    base,
     title,
     description,
     rewrites: toRoute,
