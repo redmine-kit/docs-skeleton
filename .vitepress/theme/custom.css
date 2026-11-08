@@ -56,6 +56,8 @@
   --vp-c-text-3: #929295;
   --vp-c-brand-1: #b0160f;
   --vp-c-brand-2: #a30d0d;
+  /* Hovered items: a light tint of the red instead of VitePress's grey-blue */
+  --vp-c-default-soft: rgba(199, 2, 1, 0.08);
 }
 
 .dark .VPNavBar .VPMenu,
@@ -65,6 +67,7 @@
   --vp-c-text-3: #6a6a71;
   --vp-c-brand-1: #ff8787;
   --vp-c-brand-2: #ff6b6b;
+  --vp-c-default-soft: rgba(255, 107, 107, 0.14);
 }
 
 /* VitePress paints parts of the bar differently on the home page, on pages
@@ -189,39 +192,6 @@
   border-radius: 8px;
 }
 
-/* Features: text-only cards between the hero and the lists */
-.rk-features {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  margin-bottom: 8px;
-}
-
-@media (max-width: 959px) {
-  .rk-features {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
-.rk-feature {
-  padding: 16px 18px;
-  border-radius: 12px;
-  background-color: color-mix(in srgb, var(--vp-c-bg-soft) 50%, var(--vp-c-bg));
-}
-
-.vp-doc .rk-feature p {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--vp-c-text-2);
-}
-
-.vp-doc .rk-feature p.rk-feature-title {
-  margin-bottom: 6px;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--vp-c-text-1);
-}
 
 .VPNavBar > .wrapper > .container > .title,
 .VPNavBar .divider-line {

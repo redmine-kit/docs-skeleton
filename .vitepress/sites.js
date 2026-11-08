@@ -51,8 +51,8 @@ export const groups = [
 ]
 
 export const statusLabels = {
-  design: { en: 'Design stage', ja: '設計の段階' },
-  consideration: { en: 'Under consideration', ja: '検討の段階' },
+  design: { en: 'Design stage', ja: '設計段階' },
+  consideration: { en: 'Under consideration', ja: '検討段階' },
 }
 
 /** The documentation site of a repository (its Japanese pages for `ja`), or null. */
