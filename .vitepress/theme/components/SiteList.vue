@@ -9,8 +9,8 @@ const props = defineProps({
 })
 
 const labels = {
-  en: { docs: 'Documentation', markdown: 'Markdown', markdownTitle: 'The documentation as Markdown (llms.txt)', github: 'GitHub' },
-  ja: { docs: 'ドキュメント', markdown: 'Markdown', markdownTitle: 'ドキュメントの Markdown(llms.txt)', github: 'GitHub' },
+  en: { docs: 'Documentation', markdownTitle: 'The documentation as Markdown (llms.txt)', github: 'GitHub repository' },
+  ja: { docs: 'ドキュメント', markdownTitle: 'ドキュメントの Markdown(llms.txt)', github: 'GitHub のリポジトリ' },
 }
 const label = (key) => (labels[props.lang] ?? labels.en)[key]
 const t = (entry) => entry[props.lang] ?? entry.en
@@ -50,11 +50,58 @@ const home = (item) => docsUrl(item, props.lang) ?? githubUrl(item)
           >{{ label('docs') }}</a>
           <a
             v-if="llmsUrl(item, lang)"
+            class="rk-icon-link"
             :href="llmsUrl(item, lang)"
             :title="label('markdownTitle')"
+            :aria-label="label('markdownTitle')"
             target="_self"
-          >{{ label('markdown') }}</a>
-          <a :href="githubUrl(item)">{{ label('github') }}</a>
+          >
+            <!-- Markdown mark, in the style of the Lucide icons of VitePress -->
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <g
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              >
+                <rect
+                  x="2"
+                  y="5"
+                  width="20"
+                  height="14"
+                  rx="2"
+                />
+                <path d="M6 15V9l3 3l3-3v6m5-6v6m-2.5-2.5L17 15l2.5-2.5" />
+              </g>
+            </svg>
+          </a>
+          <a
+            class="rk-icon-link"
+            :href="githubUrl(item)"
+            :title="label('github')"
+            :aria-label="label('github')"
+          >
+            <!-- "github" icon of Lucide (ISC) -->
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <g
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              >
+                <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5c.08-1.25-.27-2.48-1-3.5c.28-1.15.28-2.35 0-3.5c0 0-1 0-3 1.5c-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5c-.39.49-.68 1.05-.85 1.65S8.93 17.38 9 18v4" />
+                <path d="M9 18c-4.51 2-5-2-7-2" />
+              </g>
+            </svg>
+          </a>
         </span>
       </div>
     </li>
@@ -139,6 +186,7 @@ p.rk-desc {
 
 .rk-links {
   display: inline-flex;
+  align-items: center;
   gap: 12px;
   margin-left: auto;
   font-size: 13px;
@@ -152,5 +200,21 @@ p.rk-desc {
 
 .rk-links a:hover {
   text-decoration: underline;
+}
+
+.vp-doc .rk-links a.rk-icon-link,
+.rk-links a.rk-icon-link {
+  display: inline-flex;
+  color: var(--vp-c-text-2);
+}
+
+.vp-doc .rk-links a.rk-icon-link:hover,
+.rk-links a.rk-icon-link:hover {
+  color: var(--vp-c-brand-1);
+}
+
+.rk-icon-link svg {
+  width: 18px;
+  height: 18px;
 }
 </style>
