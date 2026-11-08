@@ -2,7 +2,9 @@
 
 A [VitePress](https://vitepress.dev/) skeleton that publishes the `docs/` folder of a repository in the [redmine-kit](https://github.com/redmine-kit) organization to GitHub Pages, at `https://redmine-kit.github.io/<repo>/`.
 
-It is based on [pieceofcake2/docs-skeleton](https://github.com/pieceofcake2/docs-skeleton), itself a fork of [cakephp/docs-skeleton](https://github.com/cakephp/docs-skeleton). The CakePHP branding, the book's header menu, the package list and analytics are removed.
+Every site gets the same header menu, listing the organization's plugins and projects, and the colors of Redmine. The repository `redmine-kit.github.io` is the organization's top site.
+
+It is based on [pieceofcake2/docs-skeleton](https://github.com/pieceofcake2/docs-skeleton), itself a fork of [cakephp/docs-skeleton](https://github.com/cakephp/docs-skeleton). The CakePHP branding, the book's navigation and analytics are removed; the header menu, the site list and the top page follow the same ideas.
 
 This project is not affiliated with the Redmine project.
 
@@ -74,6 +76,63 @@ Japanese headings have other anchors than the English ones. Put the English anch
 ## インストール
 ```
 
+## Header menu and site list
+
+The header menu of every site is built from `.vitepress/sites.js`, which lists the organization's repositories in groups:
+
+```js
+{
+  id: 'plugins',
+  en: 'Plugins',
+  ja: 'プラグイン',
+  items: [
+    {
+      repo: 'redmine_lookbook',        // repository name, and the path of its site
+      name: 'Redmine Lookbook',        // display name
+      status: 'design',                // optional: 'design' or 'consideration'
+      en: 'Previews ...',              // one-sentence description
+      ja: '...',                       // Japanese description
+      // docs: false,                  // the repository has no documentation site
+    },
+  ],
+}
+```
+
+- **Menu:** "Home" (the top site), then one dropdown per group (Plugins, Projects). The entry of the current site is highlighted and links within the site; the others open the other sites in the same tab. A repository with `docs: false` links to GitHub.
+- **Top site:** the same list is shown as cards on the top site (see below).
+- **Adding a repository:** add it to `sites.js` once its site is published, then run the docs workflow of every site by hand (**Actions » Docs » Run workflow**), so that all menus include it.
+
+## Top site
+
+The repository `redmine-kit.github.io` is published at `https://redmine-kit.github.io/` (its site has the base `/` instead of `/<repo>/`). Its `docs/README.md` is a VitePress home page:
+
+```md
+---
+layout: home
+title: Redmine Kit
+hero:
+  name: Redmine Kit
+  text: Open-source tools for Redmine
+  actions:
+    - theme: brand
+      text: Plugins
+      link: '#plugins'
+---
+
+## Plugins
+
+<SiteList group="plugins" lang="en" />
+```
+
+- `<SiteList group="..." lang="en" />` shows the repositories of a group of `sites.js` as cards, with links to the documentation, its Markdown (`llms.txt`) and GitHub. In the Markdown version of the page and in `llms.txt`, it becomes a Markdown list.
+- Links from the top site to the other sites use `<a href="/<repo>/" target="_self">`, so that the browser loads them instead of this site's router.
+- In the repository settings, **Pages » Source** must be **GitHub Actions**. GitHub may turn on its own Jekyll build for `<owner>.github.io` repositories; it then replaces this site with the README on every push.
+
+## Look
+
+- **Colors:** the red of Redmine's logo (`#C70201`) for the accent and the buttons, a deep red header bar (`#7F0000` in dark mode) with white text, and links in a darker red. Menus that open from the header keep the normal colors.
+- **Japanese:** the Japanese locale gets Japanese labels, including the search box.
+
 ## Markdown for AI tools
 
 Every page is also published as Markdown next to its `.html` (`/<repo>/installation.md`), with `llms.txt` and `llms-full.txt` for each language ([llms.txt](https://llmstxt.org/)). Every page links its Markdown in its head and its footer. A page with `llms: false` in its front matter is left out.
@@ -108,9 +167,11 @@ npm run docs:preview
 ├── .vitepress/
 │   ├── config.js          # Default VitePress configuration
 │   ├── markdown-output.js # Markdown of the pages, llms.txt (buildEnd)
+│   ├── sites.js           # The organization's repositories (header menu, top site)
+│   ├── site-nav.js        # The header menu built from sites.js
 │   ├── utils.js
 │   ├── plugins/           # markdown-it plugins (links to GitHub, substitutions)
-│   └── theme/             # Theme: colors, Markdown links, moved anchors
+│   └── theme/             # Theme: colors, site cards, Markdown links, moved anchors
 ├── config.repo.js         # Configuration for a repository's site
 └── docs/                  # The repository's docs/, copied in by the workflow
 ```
