@@ -365,7 +365,7 @@ export default async () => {
             footer: {
               message: [
                 licenseLink ? `著作権とライセンスについては、${licenseLink} を参照してください。` : '',
-                'Redmine のプロジェクトとは関係ありません。',
+                'Redmine projectとは関係ありません。',
               ].filter(Boolean).join(''),
               copyright: '',
             },
