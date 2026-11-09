@@ -295,3 +295,74 @@
     max-width: calc(var(--vp-sidebar-width) - 2rem);
   }
 }
+
+/* Search across the sites (theme/components/SiteSearch.vue), in the place of
+   VitePress's search: the button in the red header, the dialog in the page
+   colors of the current appearance. Pagefind's components take their look
+   only from these --pf-* properties. */
+.VPNavBar .content-body > .rk-search {
+  display: flex;
+  align-items: center;
+  margin-inline-end: auto;
+  --pf-font: var(--vp-font-family-base);
+  --pf-background: rgba(255, 255, 255, 0.15);
+  --pf-hover: rgba(255, 255, 255, 0.25);
+  --pf-text: #fff;
+  --pf-text-secondary: rgba(255, 255, 255, 0.9);
+  --pf-text-muted: rgba(255, 255, 255, 0.9);
+  --pf-border: transparent;
+  --pf-border-focus: rgba(255, 255, 255, 0.7);
+  --pf-outline-focus: #fff;
+  --pf-border-radius: 8px;
+  --pf-input-height: 40px;
+}
+
+.rk-search-compact {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .VPNavBar .content-body > .rk-search {
+    padding-inline-start: 1.5rem;
+  }
+}
+
+@media (min-width: 960px) {
+  .VPNavBar .content-body > .rk-search {
+    padding-inline-start: 2rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .rk-search-wide {
+    display: none;
+  }
+
+  .rk-search-compact {
+    display: inline-block;
+  }
+}
+
+.rk-search-modal {
+  --pf-font: var(--vp-font-family-base);
+  --pf-text: var(--vp-c-text-1);
+  --pf-text-secondary: var(--vp-c-text-2);
+  --pf-text-muted: var(--vp-c-text-3);
+  --pf-background: var(--vp-c-bg);
+  --pf-border: var(--vp-c-divider);
+  --pf-border-focus: var(--vp-c-brand-1);
+  --pf-outline-focus: var(--vp-c-brand-1);
+  --pf-hover: var(--vp-c-bg-soft);
+  --pf-mark: var(--vp-c-brand-1);
+  --pf-skeleton: var(--vp-c-bg-soft);
+  --pf-skeleton-shine: var(--vp-c-bg-alt);
+  --pf-border-radius: 8px;
+  --pf-modal-max-width: 640px;
+}
+
+.rk-search-modal .rk-result-site {
+  margin: 0 0 2px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--pf-text-muted);
+}

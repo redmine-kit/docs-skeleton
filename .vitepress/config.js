@@ -23,13 +23,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   // Links between pages are checked at build time; links to files of the
   // repository point to GitHub (see plugins/source-links.js).
   ignoreDeadLinks: false,
+  // The search's web components (theme/components/SiteSearch.vue)
+  vue: {
+    template: {
+      compilerOptions: {
+        isCustomElement: (tag) => tag.startsWith('pagefind-'),
+      },
+    },
+  },
   substitutions: {},
   themeConfig: {
     outline: {
       level: [2, 3],
-    },
-    search: {
-      provider: 'local',
     },
   },
   build: {
@@ -65,7 +70,28 @@ mergedConfig.transformHtml = async (code, id, context) => {
   const html = (await overrideTransformHtml?.(code, id, context)) ?? code
   const noscript = `<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${gtmId}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`
 
-  return html.replace(/<body([^>]*)>/, (body) => `${body}${noscript}`)
+  return withSearchIndex(html.replace(/<body([^>]*)>/, (body) => `${body}${noscript}`), context)
+}
+
+// The search index (Pagefind, pagefind.yml) takes each page's content, not
+// the header, sidebar and footer, with the name of its site, which the search
+// across the sites shows with each result. The 404 page has no content to
+// index. On a home layout page the index takes the whole page with its hero.
+function withSearchIndex(html, { pageData, siteData }) {
+  if (pageData.isNotFound) {
+    return html
+  }
+
+  const locale = pageData.relativePath.startsWith('ja/') ? 'ja' : 'root'
+  const value = (text) => text.replace(/,/g, ' ').replace(/[&"<>]/g, (c) => `&#${c.charCodeAt(0)};`)
+  const site = value(siteData.locales?.[locale]?.title || siteData.title)
+  const home = pageData.frontmatter?.layout === 'home'
+  // The hero's heading runs its lines together, so a home page gets its title
+  const title = home ? `, title:${value(pageData.frontmatter.title || site)}` : ''
+  const attributes = `data-pagefind-body data-pagefind-meta="site:${site}${title}"`
+  const target = home ? /<div class="VPHome"/ : /<div ([^>]*?)class="vp-doc /
+
+  return html.replace(target, (tag) => tag.replace('<div ', `<div ${attributes} `))
 }
 
 // The favicon and the image of link previews are in docs/public/, from the

@@ -307,25 +307,6 @@ export default async () => {
       siteTitle: 'Redmine Kit',
       ...(topSite ? {} : { logoLink: { link: `https://${owner.toLowerCase()}.github.io/`, target: '_self' } }),
       nav: siteNav({ current }),
-      ...(ja ? {
-        search: {
-          provider: 'local',
-          options: {
-            locales: {
-              ja: {
-                translations: {
-                  button: { buttonText: '検索', buttonAriaLabel: '検索' },
-                  modal: {
-                    noResultsText: '見つかりませんでした',
-                    resetButtonTitle: 'クリア',
-                    footer: { selectText: '選択', navigateText: '移動', closeText: '閉じる' },
-                  },
-                },
-              },
-            },
-          },
-        },
-      } : {}),
       sidebar,
       // Heading anchor => page, for links to a section on another page
       headingAnchors: anchors,

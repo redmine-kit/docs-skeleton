@@ -5,6 +5,7 @@ import MovedAnchor from "./components/MovedAnchor.vue";
 import SiteList from "./components/SiteList.vue";
 import Mermaid from "./components/Mermaid.vue";
 import Sponsors from "./components/Sponsors.vue";
+import SiteSearch from "./components/SiteSearch.vue";
 import './custom.css'
 import { h, nextTick, onMounted, watch } from "vue";
 import { useRoute } from "vitepress";
@@ -22,6 +23,8 @@ export default {
       'layout-top': () => [
         h(PageLoader),
       ],
+      // Search across every redmine-kit site, where VitePress's search was
+      'nav-bar-content-before': () => h(SiteSearch),
       // Links to the Markdown of the page (its .md version and its source),
       // on the row of the "Edit this page" link. `doc-after` covers a page
       // without a doc footer.

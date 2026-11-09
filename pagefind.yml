@@ -1,0 +1,7 @@
+# The search index of the site, written by `npm run docs:build` after the
+# VitePress build. Each site has its own index at <base>pagefind/; the search
+# box merges the other sites' indexes (theme/components/SiteSearch.vue).
+# Only the page content is indexed (data-pagefind-body, set in config.js).
+site: .vitepress/dist
+exclude_selectors:
+  - .header-anchor
