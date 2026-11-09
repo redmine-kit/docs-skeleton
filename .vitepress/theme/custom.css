@@ -246,3 +246,13 @@
     white-space: nowrap;
   }
 }
+
+/* The search box sits at the same place on every page. From 960px VitePress
+   reserves the sidebar's width for the title only on pages with a sidebar;
+   reserve it on the others (the top pages) too. */
+@media (min-width: 960px) {
+  .VPNavBar .container > .title {
+    min-width: calc(var(--vp-sidebar-width) - 2rem);
+    max-width: calc(var(--vp-sidebar-width) - 2rem);
+  }
+}
