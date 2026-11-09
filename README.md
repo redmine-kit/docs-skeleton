@@ -1,5 +1,7 @@
 # redmine-kit/docs-skeleton
 
+[![License](https://img.shields.io/github/license/redmine-kit/docs-skeleton?label=License)](LICENSE)
+
 A [VitePress](https://vitepress.dev/) skeleton that publishes the `docs/` folder of a repository in the [redmine-kit](https://github.com/redmine-kit) organization to GitHub Pages, at `https://redmine-kit.github.io/<repo>/`.
 
 Every site gets the same header menu, listing the organization's plugins and projects, and the colors of Redmine. The repository `redmine-kit.github.io` is the organization's top site.
@@ -186,4 +188,4 @@ npm run lint
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+redmine-kit/docs-skeleton is released under the MIT License. See [LICENSE](LICENSE). Not affiliated with the Redmine project.
