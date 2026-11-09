@@ -79,6 +79,12 @@ export const groups = [
         en: 'A design for running the latest Redmine on AWS Lambda, with RDS for PostgreSQL, S3, SQS and SES, using the Redmine Serverless plugins.',
         ja: '最新の Redmine を、RDS for PostgreSQL、S3、SQS、SES と Redmine Serverless のプラグインを使って、AWS Lambda で動かす設計です。',
       },
+      {
+        repo: 'design-guide',
+        name: 'Redmine Design Guide',
+        en: "How Redmine 7's own screens are built, for plugin screens that follow core, and how Redmine 7 applies a theme, with a checklist for theme authors.",
+        ja: 'Redmine 7 の画面の作りを、本体に倣うプラグインの画面のためにまとめたガイドです。Redmine 7 がテーマを適用する仕組みと、テーマの作者のためのチェックリストもあります。',
+      },
     ],
   },
 ]
