@@ -40,6 +40,12 @@ export const groups = [
         ja: 'Redmine のメールを Amazon SES で送受信するプラグインです。送信のやり直し、受け取ったメールの取り込み、プロジェクトごとのアドレスを持ちます。',
       },
       {
+        repo: 'redmine_serverless_ssm',
+        name: 'Redmine Serverless SSM',
+        en: 'Loads settings and secrets from AWS Systems Manager Parameter Store into environment variables before Rails starts.',
+        ja: 'Rails が起動する前に、AWS Systems Manager Parameter Store から設定と秘密の値を環境変数に読み込むプラグインです。',
+      },
+      {
         repo: 'redmine_github',
         name: 'Redmine GitHub',
         status: 'consideration',
