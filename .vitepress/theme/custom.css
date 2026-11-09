@@ -197,3 +197,12 @@
 .VPNavBar .divider-line {
   border-bottom-color: transparent !important;
 }
+
+/* Tables: the first column names things (roles, actions, settings). Keep each
+   name on one line instead of breaking it at a hyphen; lists in a cell put
+   one name per line with <br>. Phones keep the breaks. */
+@media (min-width: 768px) {
+  .vp-doc td:first-child code {
+    white-space: nowrap;
+  }
+}
