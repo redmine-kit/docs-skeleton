@@ -90,11 +90,6 @@
   background-color: var(--vp-nav-bg-color) !important;
 }
 
-.VPNavBar .divider-line,
-.VPNavBar.has-sidebar .divider-line {
-  background-color: transparent;
-}
-
 .VPNavBar .content-body .VPNavBarTitle .title,
 .VPNavBar .VPNavBarMenuLink,
 .VPNavBar .VPNavBarMenuGroup .button,
@@ -124,14 +119,36 @@
 }
 
 .VPNavBar .content-body .divider,
-.VPNavBar .VPNavBarExtra .divider,
-.VPNavBar .divider::before {
+.VPNavBar .VPNavBarExtra .divider {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Inside the red header, the same white tints in light and dark mode: the
+   separators between the groups, the appearance switch (its circle stays
+   white, its icon gray) and the search button with its key. These are set on
+   the controls themselves so that the dropdown menus keep the page colors. */
+.VPNavBar .content-body.content-body > *::before {
   background-color: rgba(255, 255, 255, 0.3);
 }
 
 .VPNavBar .VPSwitchAppearance {
+  --vp-input-border-color: rgba(255, 255, 255, 0.5);
+  --vp-input-switch-bg-color: rgba(255, 255, 255, 0.2);
+  --vp-c-neutral-inverse: #fff;
+  --vp-c-brand-1: #fff;
   border-color: rgba(255, 255, 255, 0.5);
   background-color: rgba(255, 255, 255, 0.2);
+}
+
+.VPNavBar .VPSwitchAppearance .icon [class^='vpi-'] {
+  color: #67676c;
+}
+
+.VPNavBar .VPNavBarSearchButton {
+  --vp-c-bg-alt: rgba(255, 255, 255, 0.15);
+  --vp-c-divider: rgba(255, 255, 255, 0.4);
+  --vp-c-text-2: rgba(255, 255, 255, 0.9);
+  --vp-c-brand-1: rgba(255, 255, 255, 0.7);
 }
 
 .VPNavBar .VPNavBarSearchButton,
@@ -233,8 +250,7 @@
 }
 
 
-.VPNavBar > .wrapper > .container > .title,
-.VPNavBar .divider-line {
+.VPNavBar > .wrapper > .container > .title {
   border-bottom-color: transparent !important;
 }
 
@@ -245,6 +261,20 @@
   .vp-doc td:first-child code {
     white-space: nowrap;
   }
+}
+
+/* The red header needs no rule under it. VitePress draws one in
+   --vp-nav-divider-color (the gutter: nearly black in dark mode) plus a
+   lighter segment over the sidebar; drop both. The bar below the header on
+   narrower screens (menu and outline) keeps one subtle line in the divider
+   color of the current appearance. */
+:root {
+  --vp-nav-divider-color: transparent;
+  --vp-local-nav-divider-color: var(--vp-c-divider);
+}
+
+.VPNavBar.has-sidebar .divider.divider::before {
+  content: none;
 }
 
 /* The search box sits at the same place on every page. From 960px VitePress
