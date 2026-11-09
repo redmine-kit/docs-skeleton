@@ -86,12 +86,15 @@ function withSearchIndex(html, { pageData, siteData }) {
   const value = (text) => text.replace(/,/g, ' ').replace(/[&"<>]/g, (c) => `&#${c.charCodeAt(0)};`)
   const site = value(siteData.locales?.[locale]?.title || siteData.title)
   const home = pageData.frontmatter?.layout === 'home'
-  // The hero's heading runs its lines together, so a home page gets its title
-  const title = home ? `, title:${value(pageData.frontmatter.title || site)}` : ''
-  const attributes = `data-pagefind-body data-pagefind-meta="site:${site}${title}"`
+  const attributes = `data-pagefind-body data-pagefind-meta="site:${site}"`
   const target = home ? /<div class="VPHome"/ : /<div ([^>]*?)class="vp-doc /
+  const indexed = html.replace(target, (tag) => tag.replace('<div ', `<div ${attributes} `))
 
-  return html.replace(target, (tag) => tag.replace('<div ', `<div ${attributes} `))
+  // The hero's heading runs its lines together, so a home page gets its title
+  // on the heading (one meta per attribute)
+  return home
+    ? indexed.replace(/<h1 class="heading"/, `<h1 data-pagefind-meta="title:${value(pageData.frontmatter.title || site)}" class="heading"`)
+    : indexed
 }
 
 // The favicon and the image of link previews are in docs/public/, from the
