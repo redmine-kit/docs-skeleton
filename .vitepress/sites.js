@@ -22,8 +22,8 @@ export const groups = [
         repo: 'redmine_serverless',
         name: 'Redmine Serverless',
         status: 'design',
-        en: 'Runs Redmine on AWS Lambda: the Lambda runtime, job failure records, and the status and jobs administration pages.',
-        ja: 'Redmine を AWS Lambda で動かすためのプラグインです。Lambda での実行、ジョブの失敗の記録、状態とジョブの管理画面を持ちます。',
+        en: 'Runs Redmine on AWS Lambda: the Lambda runtime, the settings that cannot work on Lambda, and the status and connections administration page.',
+        ja: 'Redmine を AWS Lambda で動かすためのプラグインです。Lambda での実行、Lambda で使えない設定の固定、状態と接続の管理画面を持ちます。',
       },
       {
         repo: 'redmine_serverless_s3',
@@ -38,6 +38,13 @@ export const groups = [
         status: 'design',
         en: 'Sends and receives Redmine email with Amazon SES: retries of sending, importing received mail, and addresses per project.',
         ja: 'Redmine のメールを Amazon SES で送受信するプラグインです。送信のやり直し、受け取ったメールの取り込み、プロジェクトごとのアドレスを持ちます。',
+      },
+      {
+        repo: 'redmine_serverless_sqs',
+        name: 'Redmine Serverless SQS',
+        status: 'design',
+        en: "Runs Redmine's background jobs on Amazon SQS: the settings of aws-activejob-sqs, records of failed jobs, and resending.",
+        ja: 'Redmine のバックグラウンドのジョブを Amazon SQS で動かすプラグインです。aws-activejob-sqs の設定、失敗したジョブの記録、送り直しを持ちます。',
       },
       {
         repo: 'redmine_serverless_ssm',
