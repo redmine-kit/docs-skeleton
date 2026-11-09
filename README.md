@@ -133,8 +133,12 @@ hero:
 ## Look
 
 - **Colors:** the red of Redmine's logo (`#C70201`) for the accent and the buttons, a deep red header bar (`#7F0000` in dark mode) with white text, and links in a darker red. Menus that open from the header keep the normal colors.
-- **Japanese:** the Japanese locale gets Japanese labels, including the search box.
+- **Japanese:** the Japanese locale gets Japanese labels, including the search box. Japanese lines break between phrases ([BudouX](https://github.com/google/budoux)), not between any two characters.
 - **Icons and link previews:** `docs/public/` holds the favicon and the image of link previews (`og-image.png`), made from the Redmine Kit logo (in the private repository `redmine-kit/brand`). Every page gets Open Graph and Twitter card tags with its title, description and URL. A file of the same name in a repository's `docs/public/` replaces the skeleton's.
+
+## Search
+
+The search box searches every redmine-kit site, with [Pagefind](https://pagefind.app/). `npm run docs:build` writes the site's index to `pagefind/` in the built site (`pagefind.yml`); the search on any site uses its own index and merges the indexes of the other sites in `sites.js`, ranked below its own. Each result shows the name of its site. Only the content of the pages is indexed, not the header, sidebar and footer. A site whose index does not load (not published yet, or built with another Pagefind version) is left out of the search. `docs:dev` builds no index, so the search finds nothing there; use `docs:build` and `docs:preview`.
 
 ## Markdown for AI tools
 
