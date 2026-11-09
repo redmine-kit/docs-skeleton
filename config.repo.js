@@ -313,9 +313,9 @@ export default async () => {
       },
     },
     themeConfig: {
-      // Every site's header shows Redmine Kit with its icon (docs/public, from
+      // Every site's header shows Redmine Kit with its white mark (docs/public, from
       // redmine-kit/brand) and links to the organization's top site.
-      logo: '/favicon.svg',
+      logo: '/mark-white.svg',
       siteTitle: 'Redmine Kit',
       ...(topSite ? {} : { logoLink: { link: `https://${owner.toLowerCase()}.github.io/`, target: '_self' } }),
       nav: siteNav({ current }),
