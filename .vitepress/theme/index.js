@@ -3,6 +3,7 @@ import PageLoader from "./components/PageLoader.vue";
 import MarkdownLinks from "./components/MarkdownLinks.vue";
 import MovedAnchor from "./components/MovedAnchor.vue";
 import SiteList from "./components/SiteList.vue";
+import Mermaid from "./components/Mermaid.vue";
 import './custom.css'
 import { h } from "vue";
 
@@ -30,6 +31,8 @@ export default {
   enhanceApp({ app, router }) {
     // Cards of the organization's repositories, for the top page
     app.component('SiteList', SiteList)
+    // Diagrams from ```mermaid fences (plugins/mermaid.js)
+    app.component('Mermaid', Mermaid)
 
     if (typeof window === 'undefined') {
       return
