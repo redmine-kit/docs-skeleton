@@ -188,4 +188,4 @@ npm run lint
 
 ## License
 
-redmine-kit/docs-skeleton is released under the MIT License. See [LICENSE](LICENSE). Not affiliated with the Redmine project.
+redmine-kit/docs-skeleton is released under the MIT License. See [LICENSE](LICENSE). An unofficial project for Redmine.

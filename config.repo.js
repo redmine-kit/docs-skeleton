@@ -346,7 +346,7 @@ export default async () => {
       footer: {
         message: [
           licenseLink ? `See ${licenseLink} for copyright and license information.` : '',
-          'Not affiliated with the Redmine project.',
+          'An unofficial project for Redmine.',
         ].filter(Boolean).join(' '),
         copyright: '',
       },
@@ -374,7 +374,7 @@ export default async () => {
             footer: {
               message: [
                 licenseLink ? `著作権とライセンスについては、${licenseLink} を参照してください。` : '',
-                'Redmine projectとは関係ありません。',
+                'Redmine の非公式のプロジェクトです。',
               ].filter(Boolean).join(''),
               copyright: '',
             },
