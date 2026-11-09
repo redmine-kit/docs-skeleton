@@ -1,5 +1,6 @@
 import { defineConfig } from 'vitepress'
 import { substitutionsReplacer } from './plugins/substitutions-replacer.js'
+import { mermaid } from './plugins/mermaid.js'
 import { deepMerge, loadConfigOverrides } from './utils.js'
 import { readFileSync } from 'fs'
 import { join } from 'path'
@@ -53,6 +54,7 @@ const mergedConfig = deepMerge(defaultConfig, overrides)
 const overrideMarkdownConfig = mergedConfig.markdown.config
 mergedConfig.markdown.config = (md) => {
   md.use(substitutionsReplacer, { substitutions: mergedConfig.substitutions || {} })
+  md.use(mermaid)
   overrideMarkdownConfig?.(md)
 }
 
