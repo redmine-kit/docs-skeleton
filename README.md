@@ -146,7 +146,7 @@ Every page is also published as Markdown next to its `.html` (`/<repo>/installat
 npm ci
 rsync -a --delete ../redmine_lookbook/docs/ docs/
 cp config.repo.js config.js
-export DOCS_REPOSITORY=redmine-kit/redmine_lookbook DOCS_SOURCE=../redmine_lookbook
+export DOCS_REPOSITORY=redmine-kit/redmine_lookbook
 npm run docs:build
 npm run docs:preview
 ```
@@ -159,7 +159,6 @@ npm run docs:preview
 | --- | --- |
 | `DOCS_REPOSITORY` | `owner/repo` (required) |
 | `DOCS_BRANCH` | The branch of the docs, for "Edit this page" and links to files (default: `main`) |
-| `DOCS_SOURCE` | The repository's checkout; its `LICENSE` is linked from the footer |
 | `DOCS_TITLE` | The site title (default: the `#` heading of `docs/README.md`) |
 | `DOCS_DESCRIPTION` | The site description |
 

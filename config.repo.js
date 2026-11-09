@@ -9,8 +9,6 @@
  *
  * - DOCS_REPOSITORY (required): owner/repo, e.g. redmine-kit/redmine_lookbook
  * - DOCS_BRANCH: branch the docs are built from (default: main)
- * - DOCS_SOURCE: path of the repository's checkout; its LICENSE file is
- *   linked from the footer
  * - DOCS_TITLE: site title (default: the `#` heading of `docs/README.md`)
  * - DOCS_DESCRIPTION: site description (default: the repository description)
  *
@@ -242,13 +240,6 @@ function readTitle(file) {
   return heading ? heading[1].trim() : undefined
 }
 
-function findLicense(source) {
-  if (!source || !existsSync(source)) {
-    return undefined
-  }
-
-  return readdirSync(source).find((name) => /^(LICENSE|LICENCE|COPYING)(\.[a-z]+)?$/i.test(name))
-}
 
 export default async () => {
   const repository = process.env.DOCS_REPOSITORY
@@ -258,8 +249,6 @@ export default async () => {
 
   const [owner, repo] = repository.split('/')
   const branch = process.env.DOCS_BRANCH || 'main'
-  const source = process.env.DOCS_SOURCE
-  const license = findLicense(source)
   const pages = findPages(srcDir)
   const jaPages = pages.filter((page) => page.startsWith('ja/'))
   const enPages = pages.filter((page) => !page.startsWith('ja/'))
@@ -273,7 +262,6 @@ export default async () => {
   const topSite = repo.toLowerCase() === `${owner.toLowerCase()}.github.io`
   const base = topSite ? '/' : `/${repo}/`
   const siteUrl = `https://${owner.toLowerCase()}.github.io${base}`
-  const licenseLink = license && `<a href="${repoUrl}/blob/${branch}/${license}">${license}</a>`
 
   // The header menu of every site; its entry for this site is highlighted.
   const current = topSite ? 'home' : repo
@@ -283,7 +271,7 @@ export default async () => {
   const sponsorsTag = /<Sponsors\b[^>]*>[\s\S]*?<\/Sponsors>|<Sponsors\s*\/>/g
   const markdownOutput = {
     transform: (content, { locale }) => {
-      const replaced = content.replace(sponsorsTag, () => sponsorsMarkdown())
+      const replaced = content.replace(sponsorsTag, (tag) => sponsorsMarkdown(tag.match(/\bids="([^"]*)"/)?.[1]))
 
       return topSite
         ? replaced.replace(/<SiteList\s+group="([^"]+)"[^>]*\/>/g, (_, group) => sitesMarkdown(locale === 'ja' ? 'ja' : 'en', group))
@@ -348,12 +336,10 @@ export default async () => {
         pattern: `${repoUrl}/edit/${branch}/docs/:path`,
         text: 'Edit this page on GitHub',
       },
+      // The license and the note that the project is unofficial are on each
+      // site's top page; the footer has only the copyright.
       footer: {
-        message: [
-          licenseLink ? `See ${licenseLink} for copyright and license information.` : '',
-          'An unofficial project for Redmine.',
-        ].filter(Boolean).join(' '),
-        copyright: '',
+        copyright: '© Tsuyoshi Tsurushima',
       },
     },
     ...(ja ? {
@@ -377,13 +363,6 @@ export default async () => {
             returnToTopLabel: 'ページの先頭へ',
             sidebarMenuLabel: 'メニュー',
             darkModeSwitchLabel: 'ダークモード',
-            footer: {
-              message: [
-                licenseLink ? `著作権とライセンスについては、${licenseLink} を参照してください。` : '',
-                'Redmine の非公式のプロジェクトです。',
-              ].filter(Boolean).join(''),
-              copyright: '',
-            },
           },
         },
       },

@@ -88,6 +88,9 @@ export const groups = [
  * organization's site (redmine-kit.github.io). The logos are in theme/assets.
  */
 export const sponsors = {
+  // Sponsors every project of the organization
+  keyselect: { name: 'KEY SELECT', url: 'https://www.keyselect.co.jp/' },
+  // Sponsors the projects tested on LocalStack
   localstack: { name: 'LocalStack', url: 'https://localstack.cloud' },
 }
 
@@ -125,7 +128,10 @@ export function sitesMarkdown(lang = 'en', groupId = undefined) {
     .join('\n\n') + '\n'
 }
 
+/** The ids of <Sponsors ids="a b">, or every sponsor without the attribute. */
+export const sponsorIds = (ids) => (ids ? ids.split(/[\s,]+/).filter((id) => sponsors[id]) : Object.keys(sponsors))
+
 /** The sponsors as a Markdown list, for the Markdown version of the top page. */
-export const sponsorsMarkdown = () => Object.values(sponsors)
-  .map((sponsor) => `- [${sponsor.name}](${sponsor.url})`)
+export const sponsorsMarkdown = (ids) => sponsorIds(ids)
+  .map((id) => `- [${sponsors[id].name}](${sponsors[id].url})`)
   .join('\n') + '\n'

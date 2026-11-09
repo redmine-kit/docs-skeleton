@@ -3,22 +3,30 @@
 // light or the dark appearance, under a heading of the page:
 //   ## Sponsors
 //
-//   <Sponsors><a href="https://localstack.cloud">LocalStack</a></Sponsors>
-// The link inside is what GitHub shows, since it does not know the component;
-// the site shows the logos instead.
+//   <Sponsors><a href="https://www.keyselect.co.jp/">KEY SELECT</a></Sponsors>
+// `ids` limits the list (e.g. ids="keyselect"); without it, every sponsor.
+// The links inside are what GitHub shows, since it does not know the
+// component; the site shows the logos instead.
 import { useData } from 'vitepress'
-import { sponsors } from '../../sites.js'
+import { sponsorIds, sponsors } from '../../sites.js'
+import keyselectLogo from '../assets/keyselect-logo.svg'
+import keyselectLogoDark from '../assets/keyselect-logo-dark.svg'
 import localstackLogo from '../assets/localstack-logo.svg'
 import localstackLogoDark from '../assets/localstack-logo-dark.svg'
 
 const logos = {
+  keyselect: { light: keyselectLogo, dark: keyselectLogoDark, width: 113, height: 24 },
   localstack: { light: localstackLogo, dark: localstackLogoDark, width: 120, height: 28 },
 }
 
+const props = defineProps({
+  ids: { type: String, default: '' },
+})
+
 const { isDark } = useData()
-const items = Object.entries(sponsors)
-  .filter(([id]) => logos[id])
-  .map(([id, sponsor]) => ({ id, ...sponsor, logo: logos[id] }))
+const items = sponsorIds(props.ids)
+  .filter((id) => logos[id])
+  .map((id) => ({ id, ...sponsors[id], logo: logos[id] }))
 </script>
 
 <template>
@@ -46,8 +54,9 @@ const items = Object.entries(sponsors)
 <style scoped>
 .rk-sponsors {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 24px;
+  gap: 32px;
   margin: 16px 0;
   padding: 0;
   list-style: none;

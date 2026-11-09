@@ -45,4 +45,3 @@ jobs:
         env:
           DOCS_REPOSITORY: redmine-kit/example
           DOCS_BRANCH: main
-          DOCS_SOURCE: ${{ github.workspace }}

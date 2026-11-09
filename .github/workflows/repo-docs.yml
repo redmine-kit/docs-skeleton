@@ -64,7 +64,6 @@ jobs:
         env:
           DOCS_REPOSITORY: ${{ github.repository }}
           DOCS_BRANCH: ${{ github.ref_name }}
-          DOCS_SOURCE: ${{ github.workspace }}/source
           DOCS_TITLE: ${{ inputs.title }}
           DOCS_DESCRIPTION: ${{ github.event.repository.description }}
 
