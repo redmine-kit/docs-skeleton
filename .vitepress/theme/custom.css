@@ -182,9 +182,12 @@
   max-height: calc(100dvh - var(--vp-nav-height) - 16px);
 }
 
-/* Top page (layout: home) of redmine-kit.github.io */
+/* Top page (layout: home) of redmine-kit.github.io: the same space above and
+   below the line over each section heading (40px; above, 24px here and the
+   16px margin under the paragraph before it) */
 .VPHome .vp-doc h2 {
-  margin-top: 56px;
+  margin-top: 24px;
+  padding-top: 40px;
 }
 
 /* Hero actions: rounded rectangles instead of the pill shape of VitePress */

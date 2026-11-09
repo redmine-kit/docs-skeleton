@@ -313,6 +313,11 @@ export default async () => {
       },
     },
     themeConfig: {
+      // Every site's header shows Redmine Kit with its icon (docs/public, from
+      // redmine-kit/brand) and links to the organization's top site.
+      logo: '/favicon.svg',
+      siteTitle: 'Redmine Kit',
+      ...(topSite ? {} : { logoLink: { link: `https://${owner.toLowerCase()}.github.io/`, target: '_self' } }),
       nav: siteNav({ current }),
       ...(ja ? {
         search: {
@@ -359,6 +364,7 @@ export default async () => {
           lang: 'ja',
           title: readTitle('ja/README.md') || title,
           themeConfig: {
+            ...(topSite ? {} : { logoLink: { link: `https://${owner.toLowerCase()}.github.io/ja/`, target: '_self' } }),
             nav: siteNav({ locale: 'ja', current }),
             sidebar: ja.sidebar,
             headingAnchors: ja.anchors,
