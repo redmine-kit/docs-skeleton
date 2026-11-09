@@ -30,7 +30,7 @@ export const groups = [
         name: 'Redmine Serverless S3',
         status: 'design',
         en: 'Stores Redmine attachments in Amazon S3, with direct uploads and downloads through presigned URLs. Also works outside Lambda.',
-        ja: 'Redmine の添付ファイルを Amazon S3 に置くプラグインです。アップロードとダウンロードは、署名付きの URL で S3 と直接やり取りします。Lambda でない環境でも使えます。',
+        ja: 'Redmine の添付ファイルを Amazon S3 に置くプラグインです。アップロードとダウンロードは、署名付きの URL で S3 と直接やり取りします。Lambda 以外の環境でも使えます。',
       },
       {
         repo: 'redmine_serverless_ses',
