@@ -6,7 +6,9 @@ import SiteList from "./components/SiteList.vue";
 import Mermaid from "./components/Mermaid.vue";
 import Sponsors from "./components/Sponsors.vue";
 import './custom.css'
-import { h } from "vue";
+import { h, nextTick, onMounted, watch } from "vue";
+import { useRoute } from "vitepress";
+import { applyPhraseBreaks } from "./phrase-breaks.js";
 
 // Other sites on the same origin (https://redmine-kit.github.io/<repo>/)
 // are outside this site's base. A link into one of them must be a full page
@@ -28,6 +30,14 @@ export default {
       // Links to a heading that moved to another page of the site
       'layout-bottom': () => h(MovedAnchor),
     })
+  },
+  // Japanese line breaks between phrases, on every page once it has rendered
+  setup() {
+    const route = useRoute()
+    const apply = () => nextTick(() => requestAnimationFrame(applyPhraseBreaks))
+
+    onMounted(apply)
+    watch(() => route.path, apply)
   },
   enhanceApp({ app, router }) {
     // Cards of the organization's repositories, for the top page
