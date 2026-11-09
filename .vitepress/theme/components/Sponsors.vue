@@ -66,7 +66,11 @@ const items = sponsorIds(props.ids)
   margin: 0;
 }
 
+/* Blocks without the margins of images in the text, so that the list is as
+   tall as the logos */
+.rk-sponsors a,
 .rk-sponsors img {
   display: block;
+  margin: 0;
 }
 </style>

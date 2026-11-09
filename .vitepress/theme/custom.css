@@ -182,12 +182,49 @@
   max-height: calc(100dvh - var(--vp-nav-height) - 16px);
 }
 
-/* Top page (layout: home) of redmine-kit.github.io: the same space above and
-   below the line over each section heading (40px; above, 24px here and the
-   16px margin under the paragraph before it) */
-.VPHome .vp-doc h2 {
-  margin-top: 24px;
+/* The line over each section heading (h2) has the same space above and
+   below it, on every page. Below: 40px of padding, then the heading's letters
+   start about 3px into its line (6px for Latin capitals, so English pages
+   take 3px less padding). Above: 43px after a box (table, code, cards,
+   logos), 38px after text, which ends about 5px below its letters. Margins
+   of the block before a heading are smaller and collapse into these. The
+   empty paragraph that carries an anchor (<p><a id="..."></a></p>) has no
+   height, so the block before it counts. */
+.vp-doc h2 {
+  margin-top: 43px;
   padding-top: 40px;
+}
+
+:lang(en) .vp-doc h2 {
+  padding-top: 37px;
+}
+
+.vp-doc p:has(> a[id]:only-child) {
+  margin: 0;
+}
+
+.vp-doc :is(p:not(:has(> a[id]:only-child)), ol, blockquote, ul:not(.rk-grid, .rk-sponsors)) + h2,
+.vp-doc :is(p:not(:has(> a[id]:only-child)), ol, blockquote, ul:not(.rk-grid, .rk-sponsors)) + p:has(> a[id]:only-child) + h2 {
+  margin-top: 38px;
+}
+
+/* The heading anchor (#) is placed below the padding (VitePress: top: 1.5rem),
+   on the heading's line. */
+.vp-doc h2 .header-anchor {
+  top: 40px;
+}
+
+:lang(en) .vp-doc h2 .header-anchor {
+  top: 37px;
+}
+
+/* Top page: the hero ends 43px above the first line. */
+.VPHome .vp-doc h2:first-of-type {
+  margin-top: 0;
+}
+
+.VPHome .VPHero.VPHomeHero {
+  padding-bottom: 43px;
 }
 
 /* Hero actions: rounded rectangles instead of the pill shape of VitePress */
