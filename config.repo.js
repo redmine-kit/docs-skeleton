@@ -31,7 +31,7 @@ import { fileURLToPath } from 'url'
 import { createMarkdownRenderer, disposeMdItInstance } from 'vitepress'
 import { sourceLinks } from './.vitepress/plugins/source-links.js'
 import { siteNav } from './.vitepress/site-nav.js'
-import { sitesMarkdown } from './.vitepress/sites.js'
+import { sitesMarkdown, sponsorsMarkdown } from './.vitepress/sites.js'
 
 const root = dirname(fileURLToPath(import.meta.url))
 const srcDir = join(root, 'docs')
@@ -277,17 +277,26 @@ export default async () => {
 
   // The header menu of every site; its entry for this site is highlighted.
   const current = topSite ? 'home' : repo
-  // On the top page, <SiteList group="..." /> becomes a Markdown list in the
-  // Markdown version of the page, and llms.txt lists every site.
-  const markdownOutput = topSite ? {
-    transform: (content, { locale }) => content.replace(/<SiteList\s+group="([^"]+)"[^>]*\/>/g,
-      (_, group) => sitesMarkdown(locale === 'ja' ? 'ja' : 'en', group)),
-    llmsTxt: (locale) => `## ${locale === 'ja' ? 'サイト' : 'Sites'}\n\n` + sitesMarkdown(locale === 'ja' ? 'ja' : 'en'),
-  } : undefined
+  // In the Markdown version of the pages, <Sponsors> (any site's top page) and,
+  // on the organization's top page, <SiteList group="..." /> become Markdown
+  // lists; llms.txt of the top site lists every site.
+  const sponsorsTag = /<Sponsors\b[^>]*>[\s\S]*?<\/Sponsors>|<Sponsors\s*\/>/g
+  const markdownOutput = {
+    transform: (content, { locale }) => {
+      const replaced = content.replace(sponsorsTag, () => sponsorsMarkdown())
+
+      return topSite
+        ? replaced.replace(/<SiteList\s+group="([^"]+)"[^>]*\/>/g, (_, group) => sitesMarkdown(locale === 'ja' ? 'ja' : 'en', group))
+        : replaced
+    },
+    ...(topSite ? {
+      llmsTxt: (locale) => `## ${locale === 'ja' ? 'サイト' : 'Sites'}\n\n` + sitesMarkdown(locale === 'ja' ? 'ja' : 'en'),
+    } : {}),
+  }
 
   return {
     base,
-    ...(markdownOutput ? { markdownOutput } : {}),
+    markdownOutput,
     title,
     description,
     rewrites: toRoute,

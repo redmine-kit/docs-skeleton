@@ -83,6 +83,14 @@ export const groups = [
   },
 ]
 
+/**
+ * The organization's sponsors, for <Sponsors /> on the top page of the
+ * organization's site (redmine-kit.github.io). The logos are in theme/assets.
+ */
+export const sponsors = {
+  localstack: { name: 'LocalStack', url: 'https://localstack.cloud' },
+}
+
 export const statusLabels = {
   design: { en: 'Design stage', ja: '設計段階' },
   consideration: { en: 'Under consideration', ja: '検討段階' },
@@ -116,3 +124,8 @@ export function sitesMarkdown(lang = 'en', groupId = undefined) {
     })
     .join('\n\n') + '\n'
 }
+
+/** The sponsors as a Markdown list, for the Markdown version of the top page. */
+export const sponsorsMarkdown = () => Object.values(sponsors)
+  .map((sponsor) => `- [${sponsor.name}](${sponsor.url})`)
+  .join('\n') + '\n'
