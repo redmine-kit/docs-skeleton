@@ -337,9 +337,10 @@ export default async () => {
         text: 'Edit this page on GitHub',
       },
       // The license and the note that the project is unofficial are on each
-      // site's top page; the footer has only the copyright.
+      // site's top page; the footer has one line: the copyright and Redmine's
+      // license.
       footer: {
-        copyright: '© Tsuyoshi Tsurushima',
+        copyright: '© Tsuyoshi Tsurushima. Redmine is released under the <a href="https://github.com/redmine/redmine/blob/master/doc/COPYING">GNU General Public License v2</a>.',
       },
     },
     ...(ja ? {
@@ -363,6 +364,9 @@ export default async () => {
             returnToTopLabel: 'ページの先頭へ',
             sidebarMenuLabel: 'メニュー',
             darkModeSwitchLabel: 'ダークモード',
+            footer: {
+              copyright: '© Tsuyoshi Tsurushima. Redmine は <a href="https://github.com/redmine/redmine/blob/master/doc/COPYING">GNU General Public License v2</a> で公開されています。',
+            },
           },
         },
       },
