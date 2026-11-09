@@ -65,6 +65,12 @@ export const groups = [
         en: 'Connects GitHub repositories through a GitHub App and a shared gateway, instead of repositories on the server.',
         ja: 'サーバーのリポジトリの代わりに、GitHub のリポジトリを GitHub App と共通のゲートウェイでつなぐプラグインです。',
       },
+      {
+        repo: 'redmine_help',
+        name: 'Redmine Help',
+        en: "Turns the header's Help link into help for the current screen, in the user's language, from the Redmine guide, other plugins' help and the operator's pages.",
+        ja: 'ヘッダーの「ヘルプ」を、いま開いている画面のヘルプに変えるプラグインです。Redmine のガイド、ほかのプラグインのヘルプ、運用者のページを、ユーザーの言語で表示します。',
+      },
     ],
   },
   {
@@ -84,6 +90,12 @@ export const groups = [
         name: 'Redmine Design Guide',
         en: "How Redmine 7's own screens are built, for plugin screens that follow core, and how Redmine 7 applies a theme, with a checklist for theme authors.",
         ja: 'Redmine 7 の画面の作りを、本体に倣うプラグインの画面のためにまとめたガイドです。Redmine 7 がテーマを適用する仕組みと、テーマの作者のためのチェックリストもあります。',
+      },
+      {
+        repo: 'redmine-guide',
+        name: 'Redmine Guide',
+        en: "The Redmine guide from redmine.org as Markdown, with translations and a map from Redmine's screens to its topics, for Redmine Help.",
+        ja: 'redmine.org の Redmine のガイドを Markdown にし、翻訳と、Redmine の画面からトピックへの対応表を付けたものです。Redmine Help が使います。',
       },
     ],
   },
