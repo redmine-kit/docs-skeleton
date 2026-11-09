@@ -132,6 +132,7 @@ hero:
 
 - **Colors:** the red of Redmine's logo (`#C70201`) for the accent and the buttons, a deep red header bar (`#7F0000` in dark mode) with white text, and links in a darker red. Menus that open from the header keep the normal colors.
 - **Japanese:** the Japanese locale gets Japanese labels, including the search box.
+- **Icons and link previews:** `docs/public/` holds the favicon and the image of link previews (`og-image.png`), made from the Redmine Kit logo (in the private repository `redmine-kit/brand`). Every page gets Open Graph and Twitter card tags with its title, description and URL. A file of the same name in a repository's `docs/public/` replaces the skeleton's.
 
 ## Markdown for AI tools
 
@@ -174,6 +175,7 @@ npm run docs:preview
 │   └── theme/             # Theme: colors, site cards, Markdown links, moved anchors
 ├── config.repo.js         # Configuration for a repository's site
 └── docs/                  # The repository's docs/, copied in by the workflow
+    └── public/            # Favicon and link preview image of every site
 ```
 
 ## Linting

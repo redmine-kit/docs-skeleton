@@ -68,6 +68,52 @@ mergedConfig.transformHtml = async (code, id, context) => {
   return html.replace(/<body([^>]*)>/, (body) => `${body}${noscript}`)
 }
 
+// The favicon and the image of link previews are in docs/public/, from the
+// Redmine Kit logo (redmine-kit/brand).
+const base = mergedConfig.base || '/'
+mergedConfig.head = [
+  ...(mergedConfig.head || []),
+  ['link', { rel: 'icon', href: `${base}favicon.ico`, sizes: '48x48' }],
+  ['link', { rel: 'icon', href: `${base}favicon.svg`, type: 'image/svg+xml' }],
+  ['link', { rel: 'apple-touch-icon', href: `${base}apple-touch-icon.png` }],
+]
+
+// Open Graph and Twitter card tags of every page, for link previews. The URL
+// of the page and of the image need the site's address (sitemap.hostname).
+const siteUrl = mergedConfig.sitemap?.hostname
+const ogTransformHead = mergedConfig.transformHead
+mergedConfig.transformHead = async (context) => {
+  const head = (await ogTransformHead?.(context)) || []
+  const { pageData, siteData, title, description } = context
+
+  if (pageData.isNotFound) {
+    return head
+  }
+
+  const ja = pageData.relativePath.startsWith('ja/')
+  const tags = [
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:site_name', content: (ja && siteData.locales.ja?.title) || siteData.title }],
+    ['meta', { property: 'og:title', content: title }],
+    ['meta', { property: 'og:description', content: description }],
+    ['meta', { property: 'og:locale', content: ja ? 'ja_JP' : 'en_US' }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+  ]
+
+  if (siteUrl) {
+    const path = pageData.relativePath.replace(/(^|\/)index\.md$/, '$1').replace(/\.md$/, '.html')
+    tags.push(
+      ['meta', { property: 'og:url', content: new URL(path, siteUrl).href }],
+      ['meta', { property: 'og:image', content: new URL('og-image.png', siteUrl).href }],
+      ['meta', { property: 'og:image:width', content: '1200' }],
+      ['meta', { property: 'og:image:height', content: '630' }],
+      ['meta', { property: 'og:image:alt', content: 'Redmine Kit' }],
+    )
+  }
+
+  return [...head, ...tags]
+}
+
 // Markdown version of every page, llms.txt and llms-full.txt for AI tools
 // (see markdown-output.js). `markdownOutput: false` turns it off; an object
 // passes options (`transform`, `llmsTxt`).
