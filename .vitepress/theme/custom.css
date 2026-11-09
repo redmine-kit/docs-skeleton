@@ -286,13 +286,17 @@
   content: none;
 }
 
-/* The search box sits at the same place on every page. From 960px VitePress
-   reserves the sidebar's width for the title only on pages with a sidebar;
-   reserve it on the others (the top pages) too. */
+/* The search box comes right after "Redmine Kit" on every page. From 960px
+   VitePress widens the title to the sidebar's width on pages with a sidebar;
+   keep it at its natural width there too. */
 @media (min-width: 960px) {
-  .VPNavBar .container > .title {
-    min-width: calc(var(--vp-sidebar-width) - 2rem);
-    max-width: calc(var(--vp-sidebar-width) - 2rem);
+  .VPNavBar.has-sidebar .container > .title.title {
+    min-width: 0;
+    max-width: none;
+  }
+
+  .VPNavBarTitle.has-sidebar.has-sidebar {
+    max-width: none;
   }
 }
 
