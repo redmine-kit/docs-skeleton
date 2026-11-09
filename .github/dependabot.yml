@@ -1,0 +1,16 @@
+# Update pull requests for the dependencies. Versions younger than 14 days are
+# skipped. Action updates also update .github/workflows/actions.lock.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 14
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 14
