@@ -26,8 +26,8 @@ export const groups = [
         ja: 'Redmine を AWS Lambda で動かすためのプラグインです。Lambda での実行、Lambda で使えない設定の固定、状態と接続の管理画面を持ちます。',
       },
       {
-        repo: 'redmine_serverless_cost',
-        name: 'Redmine Serverless Cost',
+        repo: 'redmine_serverless_costexplorer',
+        name: 'Redmine Serverless Cost Explorer',
         en: "Shows the AWS account's costs from Cost Explorer in Redmine's administration: this month, the forecast, by service and by day.",
         ja: 'AWS アカウントの費用を、Cost Explorer から Redmine の管理画面に表示するプラグインです。今月の費用、予測、サービスごと、日ごとの費用を表示します。',
       },
