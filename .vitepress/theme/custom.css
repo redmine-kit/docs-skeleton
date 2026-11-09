@@ -301,28 +301,14 @@
 }
 
 /* Search across the sites (theme/components/SiteSearch.vue), in the place of
-   VitePress's search: the button in the red header, the dialog in the page
-   colors of the current appearance. Pagefind's components take their look
-   only from these --pf-* properties. */
+   VitePress's search: its button (VitePress's, with the header colors above)
+   right after the title, and the dialog in the page colors of the current
+   appearance. Pagefind's components take their look only from the --pf-*
+   properties. */
 .VPNavBar .content-body > .rk-search {
   display: flex;
   align-items: center;
   margin-inline-end: auto;
-  --pf-font: var(--vp-font-family-base);
-  --pf-background: rgba(255, 255, 255, 0.15);
-  --pf-hover: rgba(255, 255, 255, 0.25);
-  --pf-text: #fff;
-  --pf-text-secondary: rgba(255, 255, 255, 0.9);
-  --pf-text-muted: rgba(255, 255, 255, 0.9);
-  --pf-border: transparent;
-  --pf-border-focus: rgba(255, 255, 255, 0.7);
-  --pf-outline-focus: #fff;
-  --pf-border-radius: 8px;
-  --pf-input-height: 40px;
-}
-
-.rk-search-compact {
-  display: none;
 }
 
 @media (min-width: 768px) {
@@ -334,16 +320,6 @@
 @media (min-width: 960px) {
   .VPNavBar .content-body > .rk-search {
     padding-inline-start: 2rem;
-  }
-}
-
-@media (max-width: 767px) {
-  .rk-search-wide {
-    display: none;
-  }
-
-  .rk-search-compact {
-    display: inline-block;
   }
 }
 
@@ -362,6 +338,17 @@
   --pf-skeleton-shine: var(--vp-c-bg-alt);
   --pf-border-radius: 8px;
   --pf-modal-max-width: 640px;
+}
+
+/* Before the first search the dialog is the input only: no empty results
+   area, key hints or line under the input. (Pagefind's own rules count as
+   three IDs, hence !important.) */
+.rk-search-modal dialog.pf-modal:not(:has(.pf-result, .pf-summary:not(:empty))) :is(.pf-modal-body, .pf-modal-footer) {
+  display: none !important;
+}
+
+.rk-search-modal dialog.pf-modal:not(:has(.pf-result, .pf-summary:not(:empty))) .pf-modal-header {
+  border-bottom-color: transparent !important;
 }
 
 .rk-search-modal .rk-result-site {
