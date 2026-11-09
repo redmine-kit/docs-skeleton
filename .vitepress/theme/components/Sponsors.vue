@@ -15,8 +15,9 @@ import localstackLogo from '../assets/localstack-logo.svg'
 import localstackLogoDark from '../assets/localstack-logo-dark.svg'
 
 const logos = {
-  keyselect: { light: keyselectLogo, dark: keyselectLogoDark, width: 113, height: 24 },
-  localstack: { light: localstackLogo, dark: localstackLogoDark, width: 120, height: 28 },
+  // Sized so that the letters of the two logos are about the same height
+  keyselect: { light: keyselectLogo, dark: keyselectLogoDark, width: 136, height: 29 },
+  localstack: { light: localstackLogo, dark: localstackLogoDark, width: 98, height: 23 },
 }
 
 const props = defineProps({
@@ -54,7 +55,8 @@ const items = sponsorIds(props.ids)
 <style scoped>
 .rk-sponsors {
   display: flex;
-  align-items: center;
+  /* Bottom-aligned, the letters of both logos line up */
+  align-items: flex-end;
   flex-wrap: wrap;
   gap: 32px;
   margin: 16px 0;
