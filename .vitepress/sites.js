@@ -59,6 +59,12 @@ export const groups = [
         ja: 'Rails が起動する前に、AWS Systems Manager Parameter Store から設定と秘密の値を環境変数に読み込むプラグインです。',
       },
       {
+        repo: 'redmine_issue_template',
+        name: 'Redmine Issue Template',
+        en: "Issue templates like GitHub's: a template chooser for New issue, Markdown templates and issue forms, synced from .redmine/ in the project's repository.",
+        ja: 'GitHub と同じチケットのテンプレートを使えるようにするプラグインです。「新しいチケット」での選択画面、Markdown のテンプレートとフォームを持ち、プロジェクトのリポジトリの .redmine/ から同期します。',
+      },
+      {
         repo: 'redmine_github',
         name: 'Redmine GitHub',
         status: 'consideration',
