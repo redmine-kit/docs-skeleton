@@ -65,4 +65,10 @@ watch(isDark, draw)
   max-width: 100%;
   height: auto;
 }
+
+/* Mermaid sizes a label with its own line height; the page's paragraph line
+   height would make the text taller than its box. */
+.mermaid-diagram :deep(foreignObject p) {
+  line-height: inherit;
+}
 </style>
