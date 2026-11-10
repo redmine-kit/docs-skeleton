@@ -61,8 +61,8 @@ export const groups = [
       {
         repo: 'redmine_issue_template',
         name: 'Redmine Issue Template',
-        en: "Issue templates like GitHub's: a template chooser for New issue, Markdown templates and issue forms, synced from .redmine/ in the project's repository.",
-        ja: 'GitHub と同じチケットのテンプレートを使えるようにするプラグインです。「新しいチケット」での選択画面、Markdown のテンプレートとフォームを持ち、プロジェクトのリポジトリの .redmine/ から同期します。',
+        en: "Issue templates: a template chooser for New issue, Markdown templates and YAML forms, synced from .redmine/ in the project's repository.",
+        ja: 'チケットテンプレートのプラグインです。「新しいチケット」でのテンプレート選択画面、Markdown テンプレートと YAML フォームを持ち、プロジェクトのリポジトリの .redmine/ から同期します。',
       },
       {
         repo: 'redmine_github',
