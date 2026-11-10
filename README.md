@@ -42,7 +42,7 @@ jobs:
 and set **Settings » Pages » Source** to **GitHub Actions**. The repository `redmine-kit.github.io` is the organization's top site and is published at `https://redmine-kit.github.io/`; link from it to the other sites with `<a href="/<repo>/" target="_self">`, so that the browser loads them instead of this site's router. The reusable workflow `.github/workflows/repo-docs.yml` builds the site with `config.repo.js` and deploys it. It deploys only from the default branch of a repository in the organization.
 
 - **Rebuilding:** the site is rebuilt only when `docs/` changes. After changing something else that the site shows (the workflow, the repository description, `LICENSE`), or after a change to this skeleton, run the workflow by hand from the Actions tab (**Run workflow**).
-- **Inputs:** `title` sets the site title, and `skeleton-ref` the branch, tag or SHA of this skeleton to build with (default: `main`). To pin the skeleton, pass the same ref to both:
+- **Inputs:** `title` sets the site title, `prepare` a shell command that runs in the repository's checkout before its `docs/` is copied (to add pages made from other files of the repository, see [Generated pages](#generated-pages)), and `skeleton-ref` the branch, tag or SHA of this skeleton to build with (default: `main`). To pin the skeleton, pass the same ref to both:
 
   ```yaml
   jobs:
@@ -66,6 +66,25 @@ The site needs no configuration in the repository:
 - **Checked links:** links between pages and to their headings are checked when the site is built, and a broken one stops the build.
 - **Vue:** `{{ ... }}` in text, inline code and code blocks is shown as text, not evaluated. Inside raw HTML it is still evaluated by Vue.
 - **Localhost:** links to `localhost` (a local server in examples) are not checked.
+
+## Generated pages
+
+A repository whose site shows more than `docs/` (for example content kept in other folders) adds those pages with the `prepare` input. The command writes them into `docs/` of the checkout before the build:
+
+```yaml
+jobs:
+  docs:
+    if: github.repository_owner == 'redmine-kit'
+    uses: redmine-kit/docs-skeleton/.github/workflows/repo-docs.yml@main
+    with:
+      prepare: ruby tools/site.rb docs
+```
+
+- **Sidebar:** `docs/sidebar.json` (and `docs/ja/sidebar.json`), in [VitePress's sidebar format](https://vitepress.dev/reference/default-theme-sidebar), replaces the generated sidebar of that language. Links to a heading that moved to another page are then not forwarded.
+- **Edit and source links:** a generated page is not a file of `docs/` on GitHub; `editLink: false` in its front matter hides both its "Edit this page" link and its source link.
+- **Anchors:** a heading can set its anchor with `{#anchor}` (`## Heading {#anchor}`); the Markdown version of the page leaves it out.
+- **Images:** a generated page can show images from `docs/public/` with absolute paths (`/images/screen.png`).
+- **Rebuilding:** add the folders the command reads to the `paths` of the workflow's `push` trigger.
 
 ## Japanese translation
 

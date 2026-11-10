@@ -22,6 +22,12 @@
  * exists, the site gets a Japanese locale at `/<repo>/ja/` with its own
  * sidebar and labels, and a language switcher. Pages that are not translated
  * yet are simply missing from the Japanese sidebar.
+ *
+ * A repository whose docs are assembled before the build (the `prepare` input
+ * of the workflow) can give the sidebar itself: `docs/sidebar.json` (and
+ * `docs/ja/sidebar.json`), in VitePress's sidebar format, replaces the
+ * generated sidebar of that locale. Links to a heading that moved to another
+ * page are then not forwarded.
  */
 import { existsSync, readdirSync, readFileSync } from 'fs'
 import { dirname, join, posix, relative } from 'path'
@@ -204,6 +210,16 @@ async function buildSidebar(pages, prefix = '') {
 }
 
 /**
+ * The sidebar of a locale from `sidebar.json` in its folder (`docs/` or
+ * `docs/ja/`), if the repository gives one.
+ */
+function readSidebar(prefix = '') {
+  const path = join(srcDir, prefix, 'sidebar.json')
+
+  return existsSync(path) ? { sidebar: JSON.parse(readFileSync(path, 'utf-8')), anchors: {} } : null
+}
+
+/**
  * The `id` of `<a id="..."></a>` tags in an HTML token (a block or inline
  * HTML token, or the inline children of a paragraph).
  */
@@ -254,8 +270,8 @@ export default async () => {
   const pages = findPages(srcDir)
   const jaPages = pages.filter((page) => page.startsWith('ja/'))
   const enPages = pages.filter((page) => !page.startsWith('ja/'))
-  const { sidebar, anchors } = await buildSidebar(enPages)
-  const ja = jaPages.some((page) => toRoute(page) === 'ja/index.md') ? await buildSidebar(jaPages, 'ja/') : null
+  const { sidebar, anchors } = readSidebar() || await buildSidebar(enPages)
+  const ja = jaPages.some((page) => toRoute(page) === 'ja/index.md') ? readSidebar('ja') || await buildSidebar(jaPages, 'ja/') : null
 
   const title = process.env.DOCS_TITLE || readTitle('README.md') || repo
   const description = process.env.DOCS_DESCRIPTION || `Documentation of ${repository}`

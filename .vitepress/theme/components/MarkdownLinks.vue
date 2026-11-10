@@ -2,7 +2,9 @@
 // Links to the Markdown of the page, shown in the doc footer on the same row
 // as the "Edit this page" link: its Markdown version on this site (written at
 // build time, see markdown-output.js) and its source on GitHub, derived from
-// the "Edit this page" link.
+// the "Edit this page" link. A page with `editLink: false` in its front matter
+// has no source link either: it is not a file of docs/ (for example a page
+// that the workflow's `prepare` command made).
 //
 // The theme renders this component twice: in the `doc-footer-before` slot of
 // the VitePress doc footer, and with `standalone` in the `doc-after` slot,
@@ -49,7 +51,7 @@ const markdownUrl = computed(() => {
 
 const sourceUrl = computed(() => {
   const pattern = theme.value.editLink?.pattern
-  if (typeof pattern !== 'string' || !page.value.filePath) {
+  if (typeof pattern !== 'string' || !page.value.filePath || frontmatter.value.editLink === false) {
     return undefined
   }
 

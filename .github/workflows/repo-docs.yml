@@ -23,6 +23,12 @@ on:
         description: 'Site title (default: the first heading of docs/README.md)'
         type: string
         default: ''
+      prepare:
+        description: >-
+          Shell command run in the repository's checkout before its docs/ is
+          copied, to add generated pages to docs/ (default: none)
+        type: string
+        default: ''
 
 jobs:
   build:
@@ -43,6 +49,13 @@ jobs:
           ref: ${{ inputs.skeleton-ref }}
           path: skeleton
           persist-credentials: false
+
+      - name: Prepare docs
+        if: inputs.prepare != ''
+        working-directory: source
+        env:
+          PREPARE: ${{ inputs.prepare }}
+        run: bash -euo pipefail -c "$PREPARE"
 
       - name: Merge docs into skeleton
         run: |

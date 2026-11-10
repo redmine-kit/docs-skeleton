@@ -11,8 +11,9 @@
  * - `llms-full.txt`: the Markdown of every page in one file
  *
  * The Markdown is the source of the page with the front matter removed,
- * `<!--@include: ...-->` and text substitutions resolved, and Vue
- * `<script>`/`<style>` blocks removed. Links are made absolute: links to
+ * `<!--@include: ...-->` and text substitutions resolved, Vue
+ * `<script>`/`<style>` blocks removed, and custom heading anchors
+ * (`## Heading {#anchor}`) removed. Links are made absolute: links to
  * pages point to their Markdown, links to other files of the repository point
  * to the file on GitHub, so the files can be read on their own.
  *
@@ -161,6 +162,32 @@ function mapOutsideCode(content, replace) {
 }
 
 /**
+ * Removes VitePress's custom anchors from headings (`## Heading {#anchor}`),
+ * which are not Markdown.
+ */
+function stripHeadingAnchors(content) {
+  let fence = null
+
+  return content.split('\n').map((line) => {
+    const marker = line.match(/^ {0,3}(`{3,}|~{3,})/)
+    if (fence) {
+      if (marker && marker[1][0] === fence[0] && marker[1].length >= fence.length && line.trim() === marker[1]) {
+        fence = null
+      }
+
+      return line
+    }
+    if (marker) {
+      fence = marker[1]
+
+      return line
+    }
+
+    return /^ {0,3}#{1,6}\s/.test(line) ? line.replace(/\s+\{#[^\s{}]+\}\s*$/, '') : line
+  }).join('\n')
+}
+
+/**
  * Writes the Markdown output. Called from the `buildEnd` hook.
  *
  * @param {object} siteConfig VitePress SiteConfig
@@ -296,6 +323,7 @@ export function writeMarkdownOutput(siteConfig, options = {}) {
     content = applySubstitutions(content, options.substitutions)
     content = content.replace(/^<(script|style)\b[^>]*>[\s\S]*?^<\/\1>\s*$/gm, '')
     content = rewriteLinks(content, page)
+    content = stripHeadingAnchors(content)
     if (!/^# /m.test(content)) {
       content = `# ${title}\n\n${content.replace(/^\s+/, '')}`
     }
