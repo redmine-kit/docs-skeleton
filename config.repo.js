@@ -323,6 +323,18 @@ export default async () => {
       anchor: {
         slugify: githubSlugify,
       },
+      // The titles of callouts (::: tip, > [!NOTE]) as Redmine names its
+      // alerts (label_alert_*)
+      container: {
+        tipLabel: 'Tip',
+        infoLabel: 'Info',
+        warningLabel: 'Warning',
+        dangerLabel: 'Danger',
+        detailsLabel: 'Details',
+        noteLabel: 'Note',
+        importantLabel: 'Important',
+        cautionLabel: 'Caution',
+      },
       config: (md) => {
         md.use(sourceLinks, { repository, branch, pages })
         md.use(indentedCodeAsFence)
@@ -360,6 +372,20 @@ export default async () => {
           label: '日本語',
           lang: 'ja',
           title: readTitle('ja/README.md') || title,
+          markdown: {
+            // Redmine's ja.yml (label_alert_*, label_details, button_copy)
+            container: {
+              tipLabel: 'ヒント',
+              infoLabel: '情報',
+              warningLabel: '警告',
+              dangerLabel: '危険',
+              detailsLabel: '詳細',
+              noteLabel: '注記',
+              importantLabel: '重要',
+              cautionLabel: '注意',
+            },
+            codeCopyButton: { tooltipText: 'コードをコピー', copiedText: 'コピーしました' },
+          },
           themeConfig: {
             ...(topSite ? {} : { logoLink: { link: `https://${owner.toLowerCase()}.github.io/ja/`, target: '_self' } }),
             nav: siteNav({ locale: 'ja', current }),
