@@ -153,7 +153,7 @@ hero:
 ## Look
 
 - **Colors:** the red of Redmine's logo (`#C70201`) for the accent and the buttons, a deep red header bar (`#7F0000` in dark mode) with white text, and links in a darker red. Menus that open from the header keep the normal colors.
-- **Japanese:** the Japanese locale gets Japanese labels, including the search box. Japanese lines break between phrases ([BudouX](https://github.com/google/budoux)), not between any two characters.
+- **Japanese:** the Japanese locale gets Japanese labels, including the search box. Japanese headings and the top page's hero break between phrases ([BudouX](https://github.com/google/budoux)), not between any two characters; body text keeps the browser's line breaking.
 - **Icons and link previews:** `docs/public/` holds the favicon and the image of link previews (`og-image.png`), made from the Redmine Kit logo (in the private repository `redmine-kit/brand`). Every page gets Open Graph and Twitter card tags with its title, description and URL. A file of the same name in a repository's `docs/public/` replaces the skeleton's.
 
 ## Search
