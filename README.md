@@ -64,7 +64,7 @@ The site needs no configuration in the repository:
 - **Anchors:** heading anchors are the same as on GitHub. A link to a heading that moved to another page is forwarded to that page.
 - **Images:** images in `docs/` (for example `docs/img/`) are bundled. Images must be inside `docs/`: an image outside it (`../screenshot.png`) stops the build.
 - **Checked links:** links between pages and to their headings are checked when the site is built, and a broken one stops the build.
-- **Vue:** `{{ ... }}` in text and inline code is shown as text, not evaluated. Inside raw HTML it is still evaluated by Vue.
+- **Vue:** `{{ ... }}` in text, inline code and code blocks is shown as text, not evaluated. Inside raw HTML it is still evaluated by Vue.
 
 ## Japanese translation
 

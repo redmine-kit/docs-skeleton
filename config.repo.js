@@ -47,10 +47,12 @@ const githubSlugify = (text) => text
 /**
  * The pages are GitHub Markdown, not Vue templates: keep `{{ ... }}` (e.g. in
  * GitHub Actions expressions) as text instead of evaluating it. Fenced code
- * blocks already have v-pre.
+ * blocks already have v-pre; indented code blocks get it here.
  */
 function noInterpolation(md) {
-  const { code_inline: codeInline, text } = md.renderer.rules
+  const { code_block: codeBlock, code_inline: codeInline, text } = md.renderer.rules
+
+  md.renderer.rules.code_block = (tokens, idx, options, env, self) => codeBlock(tokens, idx, options, env, self).replace(/^<pre\b/, '<pre v-pre')
 
   md.renderer.rules.code_inline = (tokens, idx, options, env, self) => {
     tokens[idx].attrSet('v-pre', '')
