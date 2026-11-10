@@ -21,8 +21,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   title: 'Redmine Theme',
   description: 'Documentation of a redmine-kit repository',
   // Links between pages are checked at build time; links to files of the
-  // repository point to GitHub (see plugins/source-links.js).
-  ignoreDeadLinks: false,
+  // repository point to GitHub (see plugins/source-links.js). Links to
+  // localhost (the address of a local Redmine in examples) are not checked.
+  ignoreDeadLinks: 'localhostLinks',
   // The search's web components (theme/components/SiteSearch.vue)
   vue: {
     template: {
