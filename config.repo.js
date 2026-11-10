@@ -51,14 +51,24 @@ const githubSlugify = (text) => text
   .replace(/ /g, '-')
 
 /**
+ * Indented code blocks look like fenced ones: rendered as a fenced block of
+ * `text`, with its frame, line numbers and copy button (and v-pre).
+ */
+function indentedCodeAsFence(md) {
+  md.renderer.rules.code_block = (tokens, idx, options, env, self) => {
+    tokens[idx].info = 'text'
+
+    return md.renderer.rules.fence(tokens, idx, options, env, self)
+  }
+}
+
+/**
  * The pages are GitHub Markdown, not Vue templates: keep `{{ ... }}` (e.g. in
- * GitHub Actions expressions) as text instead of evaluating it. Fenced code
- * blocks already have v-pre; indented code blocks get it here.
+ * GitHub Actions expressions) as text instead of evaluating it. Code blocks
+ * already have v-pre.
  */
 function noInterpolation(md) {
-  const { code_block: codeBlock, code_inline: codeInline, text } = md.renderer.rules
-
-  md.renderer.rules.code_block = (tokens, idx, options, env, self) => codeBlock(tokens, idx, options, env, self).replace(/^<pre\b/, '<pre v-pre')
+  const { code_inline: codeInline, text } = md.renderer.rules
 
   md.renderer.rules.code_inline = (tokens, idx, options, env, self) => {
     tokens[idx].attrSet('v-pre', '')
@@ -315,6 +325,7 @@ export default async () => {
       },
       config: (md) => {
         md.use(sourceLinks, { repository, branch, pages })
+        md.use(indentedCodeAsFence)
         md.use(noInterpolation)
       },
     },

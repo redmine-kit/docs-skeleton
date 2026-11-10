@@ -65,6 +65,7 @@ The site needs no configuration in the repository:
 - **Images:** images in `docs/` (for example `docs/img/`) are bundled. Images must be inside `docs/`: an image outside it (`../screenshot.png`) stops the build.
 - **Checked links:** links between pages and to their headings are checked when the site is built, and a broken one stops the build.
 - **Vue:** `{{ ... }}` in text, inline code and code blocks is shown as text, not evaluated. Inside raw HTML it is still evaluated by Vue.
+- **Code blocks:** an indented code block looks like a fenced one, as a block of `text`.
 - **Localhost:** links to `localhost` (a local server in examples) are not checked.
 
 ## Generated pages
