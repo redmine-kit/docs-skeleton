@@ -15,52 +15,56 @@ export const groups = [
       {
         repo: 'redmine_lookbook',
         name: 'Redmine Lookbook',
+        status: 'early',
         en: "Previews Redmine 7's components and pages in Lookbook, switching themes, languages and layouts, for theme authors.",
         ja: 'Redmine 7 のコンポーネントと画面を Lookbook でプレビューし、テーマ、言語、レイアウトを切り替えられる、テーマの作者のためのプラグインです。',
       },
       {
         repo: 'redmine_serverless',
         name: 'Redmine Serverless',
-        status: 'design',
+        status: 'early',
         en: 'Runs Redmine on AWS Lambda: the Lambda runtime, the settings that cannot work on Lambda, and the Status administration page.',
         ja: 'Redmine を AWS Lambda で動かすためのプラグインです。Lambda での実行、Lambda で使えない設定の固定、ステータスの管理画面を持ちます。',
       },
       {
         repo: 'redmine_serverless_costexplorer',
         name: 'Redmine Serverless Cost Explorer',
+        status: 'early',
         en: "Shows the AWS account's costs from Cost Explorer in Redmine's administration: this month's costs, the month-end forecast, and costs by service and by day.",
         ja: 'AWS アカウントのコストを、Cost Explorer から Redmine の管理画面に表示するプラグインです。今月のコスト、月末の予測、サービス別、日別のコストを表示します。',
       },
       {
         repo: 'redmine_serverless_s3',
         name: 'Redmine Serverless S3',
-        status: 'design',
+        status: 'early',
         en: 'Stores Redmine attachments in Amazon S3, with direct uploads and downloads through signed URLs. Also works outside Lambda.',
         ja: 'Redmine の添付ファイルを Amazon S3 に置くプラグインです。アップロードとダウンロードは、署名付き URL で S3 と直接やり取りします。Lambda 以外の環境でも使えます。',
       },
       {
         repo: 'redmine_serverless_ses',
         name: 'Redmine Serverless SES',
-        status: 'design',
+        status: 'early',
         en: 'Sends and receives Redmine email with Amazon SES: retries of sending, importing incoming emails, and addresses per project.',
         ja: 'Redmine のメールを Amazon SES で送受信するプラグインです。送信の再試行、受信メールの取り込み、プロジェクトごとのアドレスを持ちます。',
       },
       {
         repo: 'redmine_serverless_sqs',
         name: 'Redmine Serverless SQS',
-        status: 'design',
+        status: 'early',
         en: "Runs Redmine's background jobs on Amazon SQS: the settings of aws-activejob-sqs, records of failed jobs, and resending them.",
         ja: 'Redmine のバックグラウンドジョブを Amazon SQS で動かすプラグインです。aws-activejob-sqs の設定、失敗したジョブの記録、再送信を持ちます。',
       },
       {
         repo: 'redmine_serverless_ssm',
         name: 'Redmine Serverless SSM',
+        status: 'early',
         en: 'Loads settings and secrets from AWS Systems Manager Parameter Store into environment variables before Rails starts.',
         ja: 'Rails が起動する前に、AWS Systems Manager Parameter Store から設定とシークレットを環境変数に読み込むプラグインです。',
       },
       {
         repo: 'redmine_issue_template',
         name: 'Redmine Issue Template',
+        status: 'early',
         en: "Issue templates: a template chooser for New issue, Markdown templates and YAML forms, synced from .redmine/ in the project's repository.",
         ja: 'チケットテンプレートのプラグインです。「新しいチケット」でのテンプレート選択画面、Markdown テンプレートと YAML フォームを持ち、プロジェクトのリポジトリの .redmine/ から同期します。',
       },
@@ -74,6 +78,7 @@ export const groups = [
       {
         repo: 'redmine_help',
         name: 'Redmine Help',
+        status: 'early',
         en: "Turns the header's Help link into help for the current screen, in the user's language, from the Redmine guide, other plugins' help and the operator's pages.",
         ja: 'ヘッダーの「ヘルプ」を、いま開いている画面のヘルプに変えるプラグインです。Redmine のガイド、ほかのプラグインのヘルプ、運用者のページを、ユーザーの言語で表示します。',
       },
@@ -87,7 +92,7 @@ export const groups = [
       {
         repo: 'serverless',
         name: 'Serverless',
-        status: 'design',
+        status: 'early',
         en: 'A design for running the latest Redmine on AWS Lambda, with RDS for PostgreSQL, S3, SQS and SES, using the Redmine Serverless plugins.',
         ja: '最新の Redmine を、RDS for PostgreSQL、S3、SQS、SES と Redmine Serverless のプラグインを使って、AWS Lambda で動かす設計です。',
       },
@@ -119,7 +124,7 @@ export const sponsors = {
 }
 
 export const statusLabels = {
-  design: { en: 'Design stage', ja: '設計段階' },
+  early: { en: 'Early development', ja: '開発初期' },
   consideration: { en: 'Under consideration', ja: '検討段階' },
 }
 
