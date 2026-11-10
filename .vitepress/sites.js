@@ -93,8 +93,8 @@ export const groups = [
         repo: 'serverless',
         name: 'Serverless',
         status: 'early',
-        en: 'A design for running the latest Redmine on AWS Lambda, with RDS for PostgreSQL, S3, SQS and SES, using the Redmine Serverless plugins.',
-        ja: '最新の Redmine を、RDS for PostgreSQL、S3、SQS、SES と Redmine Serverless のプラグインを使って、AWS Lambda で動かす設計です。',
+        en: 'The image, infrastructure templates and deploy commands for running the latest Redmine on AWS Lambda, with RDS, S3, SQS and SES, using the Redmine Serverless plugins.',
+        ja: '最新の Redmine を、RDS、S3、SQS、SES と Redmine Serverless のプラグインを使って、AWS Lambda で動かすためのイメージ、インフラのテンプレート、デプロイコマンドです。',
       },
       {
         repo: 'design-guide',
