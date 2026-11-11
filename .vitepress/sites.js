@@ -37,8 +37,8 @@ export const groups = [
         repo: 'redmine_aws_s3',
         name: 'Redmine AWS S3',
         status: 'early',
-        en: 'Stores Redmine attachments in Amazon S3, with direct uploads and downloads through signed URLs. Also works outside Lambda.',
-        ja: 'Redmine の添付ファイルを Amazon S3 に置くプラグインです。アップロードとダウンロードは、署名付き URL で S3 と直接やり取りします。Lambda 以外の環境でも使えます。',
+        en: "Stores Redmine attachments in Amazon S3. Uploads and downloads go between the browser and S3 through CloudFront, with signed URLs on Redmine's domain, so files do not pass through Redmine. Also works outside Lambda.",
+        ja: 'Redmine の添付ファイルを Amazon S3 に置くプラグインです。アップロードとダウンロードは、Redmine のドメインの CloudFront の署名付き URL で、CloudFront を通して S3 とやり取りするので、ファイルは Redmine を通りません。Lambda 以外の環境でも使えます。',
       },
       {
         repo: 'redmine_aws_ses',
