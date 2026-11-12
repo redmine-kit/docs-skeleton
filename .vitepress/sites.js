@@ -126,8 +126,13 @@ export const groups = [
 export const sponsors = {
   // Sponsors every project of the organization
   keyselect: { name: 'KEY SELECT', url: 'https://www.keyselect.co.jp/' },
-  // Sponsors the projects tested on LocalStack
-  localstack: { name: 'LocalStack', url: 'https://localstack.cloud' },
+  // Sponsors the projects whose tests use LocalStack (repos). Their top pages
+  // list it (<Sponsors />); the others pass ids="keyselect".
+  localstack: {
+    name: 'LocalStack',
+    url: 'https://localstack.cloud',
+    repos: ['redmine_aws_s3', 'redmine_aws_ses', 'redmine_aws_costexplorer', 'serverless'],
+  },
 }
 
 export const statusLabels = {
@@ -165,7 +170,16 @@ export function sitesMarkdown(lang = 'en', groupId = undefined) {
 }
 
 /** The ids of <Sponsors ids="a b">, or every sponsor without the attribute. */
-export const sponsorIds = (ids) => (ids ? ids.split(/[\s,]+/).filter((id) => sponsors[id]) : Object.keys(sponsors))
+/**
+ * The ids of the sponsors to show: those in `ids`, or else every sponsor, or,
+ * with `repo`, the sponsors of that repository (a sponsor without `repos`
+ * sponsors every one).
+ */
+export const sponsorIds = (ids, repo = undefined) => {
+  if (ids) return ids.split(/[\s,]+/).filter((id) => sponsors[id])
+  const all = Object.keys(sponsors)
+  return repo ? all.filter((id) => !sponsors[id].repos || sponsors[id].repos.includes(repo)) : all
+}
 
 /** The sponsors as a Markdown list, for the Markdown version of the top page. */
 export const sponsorsMarkdown = (ids) => sponsorIds(ids)

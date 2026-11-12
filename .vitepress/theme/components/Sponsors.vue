@@ -4,7 +4,9 @@
 //   ## Sponsors
 //
 //   <Sponsors><a href="https://www.keyselect.co.jp/">KEY SELECT</a></Sponsors>
-// `ids` limits the list (e.g. ids="keyselect"); without it, every sponsor.
+// `ids` limits the list (e.g. ids="keyselect"); without it, the sponsors of
+// the site's repository (its base, /redmine_aws_s3/), or every sponsor on the
+// organization's site (base /).
 // The links inside are what GitHub shows, since it does not know the
 // component; the site shows the logos instead.
 import { useData } from 'vitepress'
@@ -24,8 +26,9 @@ const props = defineProps({
   ids: { type: String, default: '' },
 })
 
-const { isDark } = useData()
-const items = sponsorIds(props.ids)
+const { isDark, site } = useData()
+const repo = site.value.base.replace(/^\/|\/$/g, '') || undefined
+const items = sponsorIds(props.ids, repo)
   .filter((id) => logos[id])
   .map((id) => ({ id, ...sponsors[id], logo: logos[id] }))
 </script>
